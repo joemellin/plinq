@@ -15,6 +15,8 @@ class P.Keyboard
   constructor: (@div_name) ->
     kb = @
     @writeAudioFiles()
+    @song = new P.Song()
+    @song.keyboard = @
 
     $("#{@div_name} #keys div").click ->
       kb.playKey($(this))
@@ -29,16 +31,39 @@ class P.Keyboard
       kb.playFromKeystroke(key)
     )
 
-  playFromKeystroke: (keystroke) ->
-    keyboard_key = P.Keyboard.key_mappings[keystroke]
-    @playKey($("##{keyboard_key}")) if keyboard_key != undefined
+    $('.start_recording').click ->
+      kb.toggleRecordButton($(this), kb)
 
-  playKey: (key) ->
+    $('.play_recording').click ->
+      kb.togglePlayButton($(this), kb)
+
+  toggleRecordButton: (btn, kb) ->
+    if $(btn).hasClass('btn-success')
+      kb.song.stopRecording()
+      $(btn).removeClass('btn-success').addClass('btn-danger')
+    else
+      kb.song.startRecording()
+      $(btn).removeClass('btn-danger').addClass('btn-success')
+
+  togglePlayButton: (btn, kb) ->
+    if $(btn).find('i').hasClass('icon-pause')
+      kb.song.pause()
+      $(btn).find('i').removeClass('icon-pause').addClass('icon-play')
+    else
+      kb.song.play()
+      $(btn).find('i').removeClass('icon-play').addClass('icon-pause')
+
+  playFromKeystroke: (keystroke, dont_record = false) ->
+    keyboard_key = P.Keyboard.key_mappings[keystroke]
+    @playKey($("##{keyboard_key}"), dont_record) if keyboard_key != undefined
+
+  playKey: (key, dont_record = false) ->
     name = key.attr('id')
     sound = $("#sound_#{name}")[0]
     sound.currentTime = 0
     sound.play()
     key.addClass('active')
+    @song.addNote(name) if dont_record != true && @song.isRecording()
     setTimeout( =>
       @resetKeys()
     , 130)
@@ -51,33 +76,73 @@ class P.Keyboard
   resetKeys: ->
     $("#{@div_name} #keys div").removeClass('active')
 
+
 class P.Song
-  constructor: (@keyboard) ->
+  constructor: (@keyboard, @tempo = 120) ->
     @at = 0
-    #@notes = [['c', 'd'], ['c'], ['d']]
-    @notes = ['j', 'j', 'j', 600, 'j', 'j', 'j', 600, 'j', 'l', 'g', 'h', 'j', 600, 'k', 'k', 'k', 'k', 'k', 'k', 600, 'j', 'j', 'j', 'l', 'l', 'k', 'h', 'g']
+    @setTempo(@tempo)
+    @notes = []
+    #@notes = ['j2', 'j2', 'j2', 1, 'j2', 'j2', 'j2', 1, 'j2', 'l4', 'g1', 'h2', 'j2', 1, 'k2', 'k2', 'k2', 'k2', 'k2', 'k2', 1, 'j2', 'j2', 'j2', 'l2', 'l2', 'k2', 'h2', 'g2']
+
+    # Sets the right millisecond interval to match tempo
+  setTempo: (tempo) ->
+    @tempo = tempo
+    @interval = 60000 / tempo
+
+   # whole note is 1, 1/2 note is 2, 1/4 is 4, 1/8 note is 8 etc
+  lengthForNote: (note) ->
+    @interval / note
+
+  startRecording: ->
+    @initializeRecording()
+
+  stopRecording: ->
+    @recording = false
+
+  addNote: (note) ->
+    if @notes.length > 0 && @last_note_at != null
+      diff = new Date() - @last_note_at
+      # Modify prev record to show diff to next note
+      @notes[@notes.length - 1].push(diff)
+    @last_note_at = new Date()    
+    # And add note with zero delay
+    @notes.push([note])
+    
+  deleteRecording: ->
+    @initializeRecording()
+
+  initializeRecording: ->
+    @last_note_at = null
+    @notes = []
+    @recording = true
+
+  isRecording: ->
+    @started_recording_at != null && @recording
 
   play: ->
+    @stopRecording()
+    @at = 0
     @playNextNotes()
 
+  stop: ->
+    # to do
+
   playNextNotes: ->
-    keys_to_play = @notes[@at]
-    if keys_to_play?
+    key_and_delay = @notes[@at]
+    if key_and_delay?
+      console.log key_and_delay
       @at += 1
-      # Pause
-      if typeof keys_to_play == 'number'
-        @playIn(keys_to_play)
-      else
-        # set up as array
-        keys_to_play = [keys_to_play] if typeof keys_to_play == 'string'
-        for key in keys_to_play
-          @keyboard.playFromKeystroke(key)
-        @playIn(400)
+      @keyboard.playKey($("##{key_and_delay[0]}"))
+      @playIn(key_and_delay[1]) if key_and_delay[1]?
     else
       @at = 0
       console.log 'done!'
+      #@keyboard.togglePlayButton($('.play_recording'), @keyboard)
 
   playIn: (milliseconds_delay) ->
-    setTimeout( =>
+    if milliseconds_delay > 5
       @playNextNotes()
-    ,milliseconds_delay)
+    else
+      setTimeout( =>
+        @playNextNotes()
+      ,milliseconds_delay)
