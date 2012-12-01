@@ -2,7 +2,7 @@ class Song
   include Mongoid::Document
   include Mongoid::Timestamps
   field :title,               :type => String, :default => ""
-  field :artist              :type => String
+  field :artist,              :type => String
   field :notes,              :type => Array, :default => []
   field :featured, :type => Boolean, :default => false
 
