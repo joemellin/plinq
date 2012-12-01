@@ -15,8 +15,7 @@
 //= require_tree ./vendor/
 //= require jquery_ujs
 //= require ./vendor/backbone.min
-//= require ./backbone
-//= require app
+//= require backbone
 
 
 // require_tree .

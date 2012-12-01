@@ -32,4 +32,6 @@
 
   .btn.btn-info.learn
     %i.icon-star
-    
+
+
+= javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json} }); });"

@@ -13,6 +13,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+C = {}
+
 module Plinq
   class Application < Rails::Application
     config.generators do |g|

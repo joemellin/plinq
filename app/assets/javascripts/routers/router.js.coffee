@@ -1,13 +1,16 @@
 class P.Routers.Router extends Backbone.Router
-  initialize: (options) ->
-    Backbone.history.start()
+  #initialize: (options) ->
 
   routes:
-    "" : "play"
+    '': 'index'
+    'show/:id' : 'show'
 
-  play: ->
+  index: ->
     console.log 'play'
     window.keyboard = new P.Keyboard(div_name: '#keyboard')
     window.keyboard.setup()
     #view = new P.Views.Keyboard()
     #$("#app").html(view.render().el)
+
+  show: (id) ->
+    console.log "show song with id #{id}"

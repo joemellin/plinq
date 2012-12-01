@@ -37,3 +37,6 @@ Plinq::Application.configure do
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end
+
+C[:facebook_api_key] = '228466527176811'
+C[:facebook_api_secret] = '8e79a2b702dc943be55ad51015ad23d1'

@@ -1,3 +1,7 @@
+class P.Collections.Songs extends Backbone.Collection
+  model: P.Models.Song
+  url: '/songs'
+
 class P.Models.Song extends Backbone.Model
   defaults:
     keyboard: null
@@ -36,14 +40,14 @@ class P.Models.Song extends Backbone.Model
   addNote: (note) ->
     notes = @get('notes')
     if notes.length > 0 && @get('last_note_at') != null
-      diff = new Date() - @last_note_at
+      diff = new Date() - @get('last_note_at')
       # Modify prev record to show diff to next note
       notes = @get('notes')
       notes[notes.length - 1].push(diff)
     @set('last_note_at', new Date())
     # And add note with zero delay
     notes.push([note])
-    @set('notes', note)
+    @set('notes', notes)
     
   deleteRecording: ->
     @initializeRecording()
@@ -95,6 +99,3 @@ class P.Models.Song extends Backbone.Model
 
   nextNotes: ->
     @get('notes')[@get('at')..]
-
-class P.Songs extends Backbone.Collection
-  model: P.Models.Song

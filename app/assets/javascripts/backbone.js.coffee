@@ -9,3 +9,7 @@ window.P =
   Collections: {}
   Routers: {}
   Views: {}
+  initialize: (data) ->
+    songs = new P.Collections.Songs(data.songs)
+    new P.Routers.Router(songs: songs)
+    Backbone.history.start()
