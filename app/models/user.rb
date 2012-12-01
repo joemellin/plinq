@@ -6,7 +6,10 @@ class User
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  attr_accessible :email, :password, :password_confirmation, :remember_me
+
   ## Database authenticatable
+  field :name,               :type => String, :default => ""
   field :email,              :type => String, :default => ""
   field :encrypted_password, :type => String, :default => ""
 
@@ -40,4 +43,8 @@ class User
 
   ## Token authenticatable
   # field :authentication_token, :type => String
+
+  validates_presence_of :name
+  validates_uniqueness_of :name, :email, :case_sensitive => false
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me
 end

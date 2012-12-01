@@ -10,7 +10,13 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery.1.8.3.min
+//= require ./vendor/underscore
+//= require ./vendor/jquery.1.8.3.min
+//= require_tree ./vendor/
 //= require jquery_ujs
-//= require_tree .
+//= require ./vendor/backbone.min
+//= require ./backbone
+//= require app
 
+
+// require_tree .

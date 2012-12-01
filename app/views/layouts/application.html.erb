@@ -20,10 +20,17 @@
   </script>
 </head>
 <body>
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
+  <% if notice.present? %>
+    <p class="notice"><%= notice %></p>
+  <% end %>
+  <% if alert.present? %>
+    <p class="alert"><%= alert %></p>
+  <% end %>
 
-<%= yield %>
+  <div id="app">
+    <%= yield %>
+  </div>
 
+  
 </body>
 </html>
