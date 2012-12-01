@@ -115,20 +115,17 @@ class P.Keyboard
 
 
 class P.Song
-  constructor: (@keyboard, @tempo = 120) ->
+  constructor: (@keyboard, @speed = 1) ->
     @at = 0
     @tracking = @recording = false
-    @setTempo(@tempo)
+    @speed = 1
     @notes = []
     
-    # Sets the right millisecond interval to match tempo
-  setTempo: (tempo) ->
-    @tempo = tempo
-    @interval = 60000 / tempo
-
+   # Sets the right millisecond interval to match tempo
    # whole note is 1, 1/2 note is 2, 1/4 is 4, 1/8 note is 8 etc
-  lengthForNote: (note) ->
-    @interval / note
+  lengthForNote: (interval) ->
+    return interval if @speed == 1
+    interval / @speed
 
   startRecording: ->
     @initializeRecording()
@@ -191,11 +188,10 @@ class P.Song
   playNextNotes: ->
     key_and_delay = @notes[@at]
     if key_and_delay?
-      console.log key_and_delay
       @at += 1
       @keyboard.playKey($("##{key_and_delay[0]}"))
       if key_and_delay[1]?
-        @playIn(key_and_delay[1]) 
+        @playIn(@lengthForNote(key_and_delay[1])) 
       else
         @done()
     else
