@@ -98,7 +98,8 @@ class P.Models.Song extends Backbone.Model
     @get('notes')[@get('at')..]
 
   save: ->
-    @set('name', $('#song_name').val()) if $('#song_name').length > 0
+    @set('title', $('#song_title').val()) if $('#song_title').length > 0
+    @set('artist', $('#song_artist').val()) if $('#song_artist').length > 0
     super
 
 class P.Collections.Songs extends Backbone.Collection

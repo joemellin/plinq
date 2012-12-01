@@ -37,7 +37,8 @@
     .btn.btn-info.save_song
       %i.icon-arrow-down
 
-    = text_field_tag 'song[name]', @song.name, :id => 'song_name' 
+    = text_field_tag 'song[title]', @song.title, :placeholder => 'Title', :id => 'song_title'
+    = text_field_tag 'song[artist]', @song.artist, :placeholder => 'Artist', :id => 'song_artist'
 
 
 = javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json} }); });"
