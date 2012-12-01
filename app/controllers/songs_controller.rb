@@ -13,9 +13,9 @@ class SongsController < ApplicationController
 
   def create
     @song = Song.new(params[:song])
-    #@song.user = current_user
+    @song.user = current_user if current_user.present?
     @song.save
-    respond_with(song)
+    respond_with(@song)
   end
 
   def update
