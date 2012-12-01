@@ -7,5 +7,7 @@ Plinq::Application.routes.draw do
   match '/auth/:provider/callback' => 'authentications#create'
   match '/auth/failure' => 'authentications#failure'
 
+  get "/music" => "pages#music", :as => "music"
+
   root :to => 'songs#index'
 end
