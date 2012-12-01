@@ -4,7 +4,8 @@ class SongsController < ApplicationController
   respond_to :html, :json
 
   def index
-    respond_with(Song.featured.asc(:created_at).limit(20))
+    @songs = Song.featured.asc(:created_at).limit(20)
+    respond_with(@songs)
   end
 
   def show
