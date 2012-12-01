@@ -28,6 +28,6 @@ class SongsController < ApplicationController
   end
 
   def share
-
+    
   end
 end

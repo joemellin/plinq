@@ -10,6 +10,7 @@ class P.Models.Keyboard extends Backbone.Model
   constructor: (attr) ->
     super attr
     @song = attr.song
+    console.log @song
 
   setup: ->
     @writeAudioFiles()
@@ -40,6 +41,8 @@ class P.Models.Keyboard extends Backbone.Model
     $('.save_song').click ->
       kb.saveSong()
 
+    @updateHud()
+
   saveSong: ->
     @song.save().success ->
       alert('Your song has been saved!')
@@ -47,7 +50,6 @@ class P.Models.Keyboard extends Backbone.Model
 
   reverseKeyboardMappingFor: (key) ->
     for keyboard_key in @get('keyboard_mappings')
-      console.log "#{keyboard_key}"
       return keyboard_key if the_key == key
     return null
 
@@ -56,22 +58,24 @@ class P.Models.Keyboard extends Backbone.Model
     if btn.hasClass('btn-success') || force_stop
       @stopRecording(dont_control_song)
     else
-      keyboard.get('song').startRecording() unless dont_control_song
+      unless dont_control_song
+        keyboard.song = new P.Models.Song() unless keyboard.song.isNew()
+        keyboard.song.startRecording()
       btn.removeClass('btn-danger').addClass('btn-success')
       btn.find('i').addClass('icon-stop').removeClass('icon-volume-up')
 
   togglePlayButton: (dont_control_song = false) ->
     btn = $('.play_recording')
     if btn.find('i').hasClass('icon-pause')
-      keyboard.get('song').pause() unless dont_control_song
+      keyboard.song.pause() unless dont_control_song
       btn.find('i').removeClass('icon-pause').addClass('icon-play')
     else
-      keyboard.get('song').play() unless dont_control_song
+      keyboard.song.play() unless dont_control_song
       btn.find('i').removeClass('icon-play').addClass('icon-pause')
 
   stopRecording: (dont_control_song = false) ->
     btn = $('.start_recording')
-    keyboard.get('song').stopRecording() unless dont_control_song
+    keyboard.song.stopRecording() unless dont_control_song
     btn.removeClass('btn-success').addClass('btn-danger')
     btn.find('i').removeClass('icon-stop').addClass('icon-volume-up')
 

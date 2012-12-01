@@ -1,12 +1,14 @@
 class P.Routers.Router extends Backbone.Router
-  #initialize: (options) ->
+  initialize: (options) ->
+    @songs = options.songs if options.songs?
 
   routes:
     '': 'index'
     'show/:id' : 'show'
 
   index: ->
-    song = new P.Models.Song()
+    song = @songs.first() if @songs?
+    song = new P.Models.Song() unless song
     window.keyboard = new P.Models.Keyboard(div_name: '#keyboard', song: song)
     window.keyboard.setup()
     #view = new P.Views.Keyboard()
