@@ -1,16 +1,18 @@
-class P.Keyboard extends Backbone.Model
+class P.Models.Keyboard extends Backbone.Model
   defaults:
     keys: ['c', 'd', 'e', 'f', 'g', 'a', 'b', 'ct', 'dt', 'et', 'cs', 'ds', 'fs', 'gs', 'bb', 'cst', 'dst', 'blank']
     keyboard_mappings: {a: 'c', s: 'd', d: 'e', f: 'f', g: 'g', h: 'a', j: 'b', k: 'ct', l: 'dt', 'º': 'et', w: 'cs', e: 'ds', t: 'fs', y: 'gs', u: 'bb', o: 'cst', p: 'dst'}
     reverse_keyboard_mappings:  {c: 'a', d: 's', e: 'd', f: 'f', g: 'g', a: 'h', b: 'j', ct: 'k', dt: 'l', et: ';', cs: 'w', ds: 'e', fs: 't', gs: 'y', bb: 'u', cst: 'o', dst: 'p'}
-    control_keys: {1: 'toggleRecordButton', 2: 'togglePlayButton', 32: 'togglePlayButton', 3: 'startTracking'}
+    control_keys: {1: 'toggleRecordButton', 2: 'togglePlayButton', 32: 'togglePlayButton', 3: 'startTracking', 4: 'saveSong'}
     song: null
     div_name: null
 
+  constructor: (attr) ->
+    super attr
+    @song = attr.song
+
   setup: ->
     @writeAudioFiles()
-    s = new P.Song(keyboard: @)
-    @set('song', s)
     kb = @
 
     $("#{@get('div_name')} #keys div").click ->
@@ -34,6 +36,14 @@ class P.Keyboard extends Backbone.Model
 
     $('.learn').click ->
       kb.get('song').startTracking()
+
+    $('.save_song').click ->
+      kb.saveSong()
+
+  saveSong: ->
+    @song.save().success ->
+      window.location = "/songs/#{@song.id}"
+      alert('Your song has been saved!')
 
   reverseKeyboardMappingFor: (key) ->
     for keyboard_key in @get('keyboard_mappings')
@@ -80,8 +90,8 @@ class P.Keyboard extends Backbone.Model
     sound.currentTime = 0
     sound.play()
     key.addClass('active')
-    @get('song').addNote(name) if dont_record != true && @get('song').isRecording()
-    @get('song').moveForwardIfCorrectNote(name) if @get('song').isTracking()
+    @song.addNote(name) if dont_record != true && @song.isRecording()
+    @song.moveForwardIfCorrectNote(name) if @song.isTracking()
     setTimeout( =>
       @resetKeys()
     , 130)
@@ -89,12 +99,12 @@ class P.Keyboard extends Backbone.Model
 
   startTracking: ->
     @stopRecording()
-    @get('song').startTracking()
+    @song.startTracking()
     $('.learn i').addClass('btn-success')
 
   updateHud: ->
     $('#key_groups').html('')
-    for note in @get('song').nextNotes()
+    for note in @song.nextNotes()
       keyboard_key = @get('reverse_keyboard_mappings')[note[0]]
       $('#key_groups').append('<div class="left key_group">' + keyboard_key.toUpperCase() + '</div>') if keyboard_key?
 

@@ -30,8 +30,14 @@
   .btn.btn-info.play_recording
     %i.icon-play
 
+  %br/
+  %br/
+  
   .btn.btn-info.learn
     %i.icon-star
+
+  .btn.btn-info.save_song
+    %i.icon-arrow-down
 
 
 = javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json} }); });"

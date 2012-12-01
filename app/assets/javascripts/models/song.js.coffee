@@ -1,6 +1,5 @@
-class P.Song extends Backbone.Model
+class P.Models.Song extends Backbone.Model
   defaults:
-    keyboard: null
     at: 0
     tracking: false
     recording: false
@@ -22,7 +21,7 @@ class P.Song extends Backbone.Model
 
   stopRecording: ->
     @set('recording', false)
-    @get('keyboard').toggleRecordButton(true, true)
+    keyboard.toggleRecordButton(true, true)
 
   startTracking: ->
     @set('tracking', true)
@@ -72,14 +71,14 @@ class P.Song extends Backbone.Model
 
   done: ->
     @set('at', 0)
-    @get('keyboard').togglePlayButton(true)
-    @get('keyboard').updateHud()
+    keyboard.togglePlayButton(true)
+    keyboard.updateHud()
 
   playNextNotes: ->
     key_and_delay = @get('notes')[@get('at')]
     if key_and_delay?
       @set('at', @get('at') + 1)
-      @get('keyboard').playKey($("##{key_and_delay[0]}"))
+      keyboard.playKey($("##{key_and_delay[0]}"))
       if key_and_delay[1]?
         @playIn(@lengthForNote(key_and_delay[1])) 
       else
@@ -98,6 +97,6 @@ class P.Song extends Backbone.Model
   nextNotes: ->
     @get('notes')[@get('at')..]
 
-class P.Songs extends Backbone.Collection
-  model: P.Song
+class P.Collections.Songs extends Backbone.Collection
+  model: P.Models.Song
   url: '/songs'
