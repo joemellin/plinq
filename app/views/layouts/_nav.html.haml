@@ -3,10 +3,10 @@
     %ul.nav
       %li= link_to image_tag('topbar_logo.png'), "/"
       %li= link_to 'Music Library', songs_path
-      %li= link_to 'Leader Board', leaderboard_index_path
+      %li= link_to 'Leaderboard', leaderboard_index_path
       - if user_signed_in?
         %li.dropdown
-          %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', :src => '#'}
+          %a.dropdown-toggle{'data-toggle' => 'dropdown', :src => '#'}
             Account
             %b.caret
           %ul.dropdown-menu
