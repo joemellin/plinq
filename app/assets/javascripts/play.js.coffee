@@ -7,16 +7,19 @@ window.keyboard = null
 
 $ ->
   window.keyboard = new P.Keyboard '#keyboard'
+  window.keyboard.updateHud()
 
 class P.Keyboard
   @keys: ['c', 'd', 'e', 'f', 'g', 'a', 'b', 'ct', 'dt', 'et', 'cs', 'ds', 'fs', 'gs', 'bb', 'cst', 'dst', 'blank']
-  @key_mappings: {a: 'c', s: 'd', d: 'e', f: 'f', g: 'g', h: 'a', j: 'b', k: 'ct', l: 'dt', 'º': 'et', w: 'cs', e: 'ds', t: 'fs', y: 'gs', u: 'bb', o: 'cst', p: 'dst'}
+  @keyboard_mappings: {a: 'c', s: 'd', d: 'e', f: 'f', g: 'g', h: 'a', j: 'b', k: 'ct', l: 'dt', 'º': 'et', w: 'cs', e: 'ds', t: 'fs', y: 'gs', u: 'bb', o: 'cst', p: 'dst'}
+  @reverse_keyboard_mappings:  {c: 'a', d: 's', e: 'd', f: 'f', g: 'g', a: 'h', b: 'j', ct: 'k', dt: 'l', et: ';', cs: 'w', ds: 'e', fs: 't', gs: 'y', bb: 'u', cst: 'o', dst: 'p'}
+  @control_keys: {1: 'toggleRecordButton', 2: 'togglePlayButton', 32: 'togglePlayButton'}
 
   constructor: (@div_name) ->
-    kb = @
     @writeAudioFiles()
-    @song = new P.Song()
-    @song.keyboard = @
+    @song = new P.Song(@)
+    @
+    kb = @
 
     $("#{@div_name} #keys div").click ->
       kb.playKey($(this))
@@ -28,34 +31,49 @@ class P.Keyboard
       unicode = e.keyCode
       unicode = unicode|0x20
       key = String.fromCharCode(unicode)
-      kb.playFromKeystroke(key)
+      kb.playFromKeystroke(key, e.keyCode)
     )
 
     $('.start_recording').click ->
-      kb.toggleRecordButton($(this), kb)
+      kb.toggleRecordButton()
 
     $('.play_recording').click ->
-      kb.togglePlayButton($(this), kb)
+      kb.togglePlayButton()
 
-  toggleRecordButton: (btn, kb) ->
-    if $(btn).hasClass('btn-success')
-      kb.song.stopRecording()
-      $(btn).removeClass('btn-success').addClass('btn-danger')
+  reverseKeyboardMappingFor: (key) ->
+    for keyboard_key in P.Keyboard.keyboard_mappings
+      console.log "#{keyboard_key}"
+      return keyboard_key if the_key == key
+    return null
+
+  toggleRecordButton: (dont_control_song = false, force_stop = false) ->
+    btn = $('.start_recording')
+    if btn.hasClass('btn-success') || force_stop
+      keyboard.song.stopRecording() unless dont_control_song
+      btn.removeClass('btn-success').addClass('btn-danger')
+      btn.find('i').removeClass('icon-stop').addClass('icon-volume-up')
     else
-      kb.song.startRecording()
-      $(btn).removeClass('btn-danger').addClass('btn-success')
+      keyboard.song.startRecording() unless dont_control_song
+      btn.removeClass('btn-danger').addClass('btn-success')
+      btn.find('i').addClass('icon-stop').removeClass('icon-volume-up')
 
-  togglePlayButton: (btn, kb) ->
-    if $(btn).find('i').hasClass('icon-pause')
-      kb.song.pause()
-      $(btn).find('i').removeClass('icon-pause').addClass('icon-play')
+  togglePlayButton: (dont_control_song = false) ->
+    btn = $('.play_recording')
+    if btn.find('i').hasClass('icon-pause')
+      keyboard.song.pause() unless dont_control_song
+      btn.find('i').removeClass('icon-pause').addClass('icon-play')
     else
-      kb.song.play()
-      $(btn).find('i').removeClass('icon-play').addClass('icon-pause')
+      keyboard.song.play() unless dont_control_song
+      btn.find('i').removeClass('icon-play').addClass('icon-pause')
 
-  playFromKeystroke: (keystroke, dont_record = false) ->
-    keyboard_key = P.Keyboard.key_mappings[keystroke]
-    @playKey($("##{keyboard_key}"), dont_record) if keyboard_key != undefined
+  playFromKeystroke: (keystroke, key_code) ->
+    keyboard_key = P.Keyboard.keyboard_mappings[keystroke]
+    if keyboard_key != undefined
+      @playKey($("##{keyboard_key}"))
+    else
+      control = P.Keyboard.control_keys[keystroke]
+      control = P.Keyboard.control_keys[key_code] unless control?
+      @[control]() if control?
 
   playKey: (key, dont_record = false) ->
     name = key.attr('id')
@@ -67,7 +85,13 @@ class P.Keyboard
     setTimeout( =>
       @resetKeys()
     , 130)
-    $("#current_key").text(name.toUpperCase())
+    @updateHud()
+
+  updateHud: ->
+    $('#key_groups').html('')
+    for note in @song.nextNotes()
+      keyboard_key = P.Keyboard.reverse_keyboard_mappings[note[0]]
+      $('#key_groups').append('<div class="left key_group">' + keyboard_key.toUpperCase() + '</div>') if keyboard_key?
 
   writeAudioFiles: ->
     for key in P.Keyboard.keys
@@ -82,8 +106,7 @@ class P.Song
     @at = 0
     @setTempo(@tempo)
     @notes = []
-    #@notes = ['j2', 'j2', 'j2', 1, 'j2', 'j2', 'j2', 1, 'j2', 'l4', 'g1', 'h2', 'j2', 1, 'k2', 'k2', 'k2', 'k2', 'k2', 'k2', 1, 'j2', 'j2', 'j2', 'l2', 'l2', 'k2', 'h2', 'g2']
-
+    
     # Sets the right millisecond interval to match tempo
   setTempo: (tempo) ->
     @tempo = tempo
@@ -98,6 +121,7 @@ class P.Song
 
   stopRecording: ->
     @recording = false
+    @keyboard.toggleRecordButton(true, true)
 
   addNote: (note) ->
     if @notes.length > 0 && @last_note_at != null
@@ -124,8 +148,20 @@ class P.Song
     @at = 0
     @playNextNotes()
 
-  stop: ->
-    # to do
+  pause: ->
+    if @pause == true
+      @pause = false
+      # Reset to beginning of song
+      @at = 0 unless @notes[@at]?
+      @playNextNotes()
+    else
+      @pause = true
+
+  done: ->
+    console.log 'done!'
+    @at = 0
+    @keyboard.togglePlayButton(true)
+    @keyboard.updateHud()
 
   playNextNotes: ->
     key_and_delay = @notes[@at]
@@ -133,16 +169,20 @@ class P.Song
       console.log key_and_delay
       @at += 1
       @keyboard.playKey($("##{key_and_delay[0]}"))
-      @playIn(key_and_delay[1]) if key_and_delay[1]?
+      if key_and_delay[1]?
+        @playIn(key_and_delay[1]) 
+      else
+        @done()
     else
-      @at = 0
-      console.log 'done!'
-      #@keyboard.togglePlayButton($('.play_recording'), @keyboard)
+      @done()
 
   playIn: (milliseconds_delay) ->
-    if milliseconds_delay > 5
+    if milliseconds_delay < 5
       @playNextNotes()
     else
       setTimeout( =>
         @playNextNotes()
       ,milliseconds_delay)
+
+  nextNotes: ->
+    @notes[@at..]
