@@ -42,8 +42,8 @@ class P.Models.Keyboard extends Backbone.Model
 
   saveSong: ->
     @song.save().success ->
-      window.location = "/songs/#{@song.id}"
       alert('Your song has been saved!')
+
 
   reverseKeyboardMappingFor: (key) ->
     for keyboard_key in @get('keyboard_mappings')

@@ -1,0 +1,43 @@
+#hud
+  #key_groups
+  .clear
+#keyboard_wrapper
+  #keyboard
+    #audio_files
+    #keys
+      #c.whites
+      #d.whites
+      #e.whites
+      #f.whites
+      #g.whites
+      #a.whites
+      #b.whites
+      #ct.whites
+      #dt.whites
+      #et.whites
+      #cs.blacks
+      #ds.blacks
+      #fs.blacks
+      #gs.blacks
+      #bb.blacks
+      #cst.blacks
+      #dst.blacks
+
+.controls
+  .btn.btn-danger.start_recording
+    %i.icon-volume-up
+
+  .btn.btn-info.play_recording
+    %i.icon-play
+
+  %br/
+  %br/
+  
+  .btn.btn-info.learn
+    %i.icon-star
+
+  .btn.btn-info.save_song
+    %i.icon-arrow-down
+
+
+= javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json} }); });"
