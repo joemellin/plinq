@@ -1,8 +1,4 @@
-class P.Collections.Songs extends Backbone.Collection
-  model: P.Models.Song
-  url: '/songs'
-
-class P.Models.Song extends Backbone.Model
+class P.Song extends Backbone.Model
   defaults:
     keyboard: null
     at: 0
@@ -12,7 +8,9 @@ class P.Models.Song extends Backbone.Model
     speed: 1
     last_note_at: null
     notes: []
-    
+
+  urlRoot: '/songs'
+
    # Sets the right millisecond interval to match tempo
    # whole note is 1, 1/2 note is 2, 1/4 is 4, 1/8 note is 8 etc
   lengthForNote: (interval) ->
@@ -99,3 +97,7 @@ class P.Models.Song extends Backbone.Model
 
   nextNotes: ->
     @get('notes')[@get('at')..]
+
+class P.Songs extends Backbone.Collection
+  model: P.Song
+  url: '/songs'

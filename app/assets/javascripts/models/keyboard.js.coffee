@@ -9,7 +9,8 @@ class P.Keyboard extends Backbone.Model
 
   setup: ->
     @writeAudioFiles()
-    @set('song', new P.Models.Song(keyboard: @))
+    s = new P.Song(keyboard: @)
+    @set('song', s)
     kb = @
 
     $("#{@get('div_name')} #keys div").click ->

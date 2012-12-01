@@ -6,7 +6,6 @@ class P.Routers.Router extends Backbone.Router
     'show/:id' : 'show'
 
   index: ->
-    console.log 'play'
     window.keyboard = new P.Keyboard(div_name: '#keyboard')
     window.keyboard.setup()
     #view = new P.Views.Keyboard()
