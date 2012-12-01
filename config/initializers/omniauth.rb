@@ -1,4 +1,4 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
   provider :twitter, '', ''
-  provider :facebook, C[:facebook_api_key], C[:facebook_api_secret]
+  provider :facebook, ENV['FACEBOOK_API_KEY'] || C[:facebook_api_key], ENV['FACEBOOK_API_SECRET'] || C[:facebook_api_secret]
 end
