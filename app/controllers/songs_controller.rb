@@ -39,6 +39,10 @@ class SongsController < ApplicationController
   end
 
   def share
+    if session[:share_song_id].present?
+      params[:message] ||= session[:share_song_message]
+      session[:share_song_message] = session[:share_song_id] = nil
+    end
     @song.share_on_facebook(current_user, url_for(:action => :show, :id => @song.id, :host => 'www.plinq.co'), params[:message])
     redirect_to @song
   end

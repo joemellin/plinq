@@ -104,8 +104,6 @@ class User
         self.email = "#{omniauth['info']['nickname']}@users.facebook.com" if self.email.blank?
         self.location = omniauth['info']['location'] if omniauth['info']['location'].present?
       end
-      self.valid?
-      logger.info self.errors.full_messages.join(',')
     rescue
       logger.warn "ERROR applying omniauth with data: #{omniauth}"
     end
