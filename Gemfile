@@ -13,7 +13,7 @@ gem 'cancan'
 gem "omniauth", ">= 1.0"
 gem "omniauth-twitter"
 gem "omniauth-facebook"
-gem 'koala'
+
 
 
 # Gems used only for assets and not required
