@@ -29,7 +29,7 @@ body {
   color: #fff;
   width: 100%;
   #song_wrapper {
-    background: #000 image-url('arealhero.png');
+    background: #000 image-url('arealhero.png') no-repeat center;
     .song {
       padding: 0 20px 0 20px;
       overflow-x: hidden;
@@ -47,7 +47,7 @@ body {
     padding: 10px;
   }
   .key_group:first-child{
-    border: 2px solid red;
+    border: 5px solid green;
   }
 }
 
