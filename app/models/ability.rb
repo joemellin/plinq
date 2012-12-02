@@ -34,6 +34,7 @@ class Ability
 
     can [:read, :create], Song
     can :manage, Song, :user => user
+    can [:listen, :played], Song
 
     can :manage, User, :id => user.id
     can :read, User
