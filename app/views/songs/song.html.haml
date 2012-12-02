@@ -13,6 +13,8 @@
 
     .btn.btn-info.play_recording
       %i.icon-play
+
+    %br/
   
     .btn.btn-info.learn
       %i.icon-star
@@ -20,7 +22,9 @@
     .btn.btn-info.save_song
       %i.icon-arrow-down
 
+    %br/
     = text_field_tag 'song[title]', @song.title, :placeholder => 'Title', :id => 'song_title'
+    %br/
     = text_field_tag 'song[artist]', @song.artist, :placeholder => 'Artist', :id => 'song_artist'
 
 
