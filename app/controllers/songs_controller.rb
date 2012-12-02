@@ -9,6 +9,7 @@ class SongsController < ApplicationController
   end
 
   def show
+    @songs = Song.featured.asc(:created_at).limit(20)
     respond_to do |format|
       format.html { render :action => :song}
       format.json { render :json => @song }
