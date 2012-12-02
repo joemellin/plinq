@@ -80,23 +80,23 @@ body {
     .progress {
       height: 39px;
     }
-  
-    .shareButton {
-      background:image-url('fb_share_button_2.png') no-repeat;
-      width: 157px;
-      height: 39px;
-      cursor: pointer;
-      float: left;
-    }
-
-    .shareButton:hover {
-      background:image-url('fb_share_button_hover.png') no-repeat;
-    }
-
-    .shareButton:active {
-      background:image-url('fb_share_button_downstate.png') no-repeat;
-    }
   }
+}
+
+.shareButton {
+  background:image-url('fb_share_button_2.png') no-repeat;
+  width: 157px;
+  height: 39px;
+  cursor: pointer;
+  float: left;
+}
+
+.shareButton:hover {
+  background:image-url('fb_share_button_hover.png') no-repeat;
+}
+
+.shareButton:active {
+  background:image-url('fb_share_button_downstate.png') no-repeat;
 }
 
 .playButton {

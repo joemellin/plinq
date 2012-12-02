@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
     if user_signed_in?
       return true
     else
-      
       redirect_to '/auth/facebook'
       return false
     end

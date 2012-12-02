@@ -12,6 +12,9 @@ class P.Models.Song extends Backbone.Model
 
   urlRoot: '/songs'
 
+  defaultShareMessage: ->
+    "Boom! I just learned to play #{@get('title')} on Plinq :)"
+
    # Sets the right millisecond interval to match tempo
    # whole note is 1, 1/2 note is 2, 1/4 is 4, 1/8 note is 8 etc
   lengthForNote: (interval) ->
@@ -138,13 +141,14 @@ class P.Models.Song extends Backbone.Model
   shareRecording: ->
     if @recordingSong?
       @recordingSong.save().success =>
-        window.location = @recordingSong.url() + '/share'
+        $('#share_song_form #song_id').val(@recordingSong.get('id'))
+        $('#share_song_form').submit()
 
   recordPlayed: ->
-    $.post(@recordingSong.url() + '/played')
+    $.post(@url() + '/played')
 
   recordListened: ->
-    $.post(@recordingSong.url() + '/listened')
+    $.post(@url() + '/listened')
 
 
 

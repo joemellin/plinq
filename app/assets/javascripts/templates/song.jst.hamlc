@@ -17,7 +17,7 @@
   - else
     .sharewell
       .playButton.playRecordingButton
-      .shareButton{:style => 'padding-left:2px;'}
+      .shareButton{:style => 'padding-left:2px;', :onclick => "$('.share_modal').modal(); return false"}
       .clear
 
 .play_modal.modal.hide
@@ -36,3 +36,14 @@
     .left
       %h4{:style => 'color: #666'} Plays: #{@song.get('listen_count')}
     .clear
+
+.share_modal.modal.hide
+  .modal-header
+    %button.close{:type => 'button', 'data-dismiss' => 'modal'} x
+  .modal-body
+    %form{:action => "#{@song.url()}/share", :method => 'post', :id => 'share_song_form'}
+      What would you like to tell your friends?
+      %input{:type => 'hidden', :value => '', :name => 'id', :id => 'song_id'}
+      %textarea{:class => 'span4', :name => 'message'}= @song.defaultShareMessage()
+      .shareButton.shareButtonFinal
+   

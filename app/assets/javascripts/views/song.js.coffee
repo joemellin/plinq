@@ -9,7 +9,7 @@ class P.Views.Song extends Backbone.View
     @render()
 
   events: ->
-    "click .shareButton": "share"
+    "click .shareButtonFinal": "share"
     "click .playRecordingButton": "playRecording"
     "click .playSongButton": "playSong"
 

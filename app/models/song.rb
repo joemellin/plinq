@@ -20,10 +20,6 @@ class Song
   #validates_presence_of :user
   #validates_presence_of :notes
 
-  def self.default_share_message
-    "Come listen to this great song I played on Plinq!"
-  end
-
   def original_song
     return Song.find(self.original_song_id) if self.original_song_id.present?
     nil
@@ -53,7 +49,7 @@ class Song
   end
 
   def share_on_facebook(user, link_to_song, message = nil)
-    message ||= Song.default_share_message
+    message ||= Song.default_share_message(self.title)
     if post = user.facebook_api.put_wall_post(message, {:link => link_to_song})
       self.facebook_shares[user.id] = post.id
       true
