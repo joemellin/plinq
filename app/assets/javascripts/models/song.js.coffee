@@ -34,7 +34,8 @@ class P.Models.Song extends Backbone.Model
   moveForwardIfCorrectNote: (note) ->
     if @get('notes')[@get('at')]?
       @set('at', @get('at') + 1) if note == @get('notes')[@get('at')][0]
-    @done() if @get('at') != 0 && !@get('notes')[@get('at')]?
+    if @get('at') != 0 && !@get('notes')[@get('at')]?
+      @done('play') 
 
   keyPlayed: (name) ->
     @addNote(name) if @isRecording()
@@ -85,7 +86,7 @@ class P.Models.Song extends Backbone.Model
     else
       @set('paused', true)
 
-  done: ->
+  done: (type = 'listen') ->
     @set('at', 0)
     @set('times_played', @get('times_played') + 1)
     if @recordingSong?
@@ -96,6 +97,10 @@ class P.Models.Song extends Backbone.Model
         end_at = recorded_notes.length - 1
         last_two_bars_start = end_at - two_bars
         @recordingSong.set('notes', recorded_notes[last_two_bars_start..end_at]) if recorded_notes.length > last_two_bars_start
+    if type == 'listen'
+      @recordListened()
+    else if type == 'play'
+      @recordPlayed()
 
   playNextNotes: ->
     key_and_delay = @get('notes')[@get('at')]
@@ -133,7 +138,14 @@ class P.Models.Song extends Backbone.Model
   shareRecording: ->
     if @recordingSong?
       @recordingSong.save().success =>
-        window.location = "/songs/#{@recordingSong.get('id')}/share"
+        window.location = @recordingSong.url() + '/share'
+
+  recordPlayed: ->
+    $.post(@recordingSong.url() + '/played')
+
+  recordListened: ->
+    $.post(@recordingSong.url() + '/listened')
+
 
 
 class P.Collections.Songs extends Backbone.Collection

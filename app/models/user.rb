@@ -100,7 +100,7 @@ class User
           self.email = omniauth['extra']['user_hash']['email'] if omniauth['extra'] && omniauth['extra']['user_hash'] && !omniauth['extra']['user_hash']['email'].blank?
           self.email = omniauth['info']['email'] unless omniauth['info']['email'].blank?
         end
-        #self.remote_pic_url = omniauth['info']['']
+        self.remote_pic_url = omniauth['info']['image']
         self.email = "#{omniauth['info']['nickname']}@users.facebook.com" if self.email.blank?
         self.location = omniauth['info']['location'] if omniauth['info']['location'].present?
       end

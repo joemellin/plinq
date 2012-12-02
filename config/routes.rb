@@ -4,6 +4,8 @@ Plinq::Application.routes.draw do
   resources :songs do
     member do
       match 'share'
+      post 'played'
+      post 'listened'
     end
   end
 

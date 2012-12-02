@@ -7,6 +7,9 @@ class Song
   field :featured,            :type => Boolean, :default => false
   field :original_song_id,    :type => String
   field :facebook_shares,     :type => Hash, :default => {}
+  field :play_count,          :type => Integer, :default => 0
+  field :listen_count,        :type => Integer, :default => 0
+  field :image_url,           :type => String
 
   belongs_to :user
 
@@ -26,14 +29,26 @@ class Song
     nil
   end
 
+  def increment_play_count!
+    self.play_count += 1
+    self.save
+  end
+
+  def increment_listen_count!
+    self.listen_count += 1
+    self.save
+  end
+
   def as_json(options = {})
     {
       :id => self.id,
       :title => self.title,
       :artist => self.artist,
       :notes => self.notes,
+      :listen_count => self.listen_count,
       :user_id => self.user.id,
-      :user_name => self.user.name
+      :user_name => self.user.name,
+      :user_pic => self.user.remote_pic_url
     }
   end
 

@@ -14,5 +14,6 @@ window.P =
     songs = new P.Collections.Songs(data.songs)
     P.user = if data.user? then new P.Models.User(data.user) else null
     P.router = new P.Routers.Router(songs: songs)
+    P.show_play_modal = data.show_play_modal
     Backbone.history.start()
     #P.router.navigate('/')

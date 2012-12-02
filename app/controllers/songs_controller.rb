@@ -10,6 +10,7 @@ class SongsController < ApplicationController
 
   def show
     @songs = Song.featured.asc(:created_at).limit(20)
+    @show_play_modal = (user_signed_in? && (@song.user.id == current_user.id)) ? true : false
     respond_to do |format|
       format.html { render :action => :song}
       format.json { render :json => @song }
@@ -40,5 +41,15 @@ class SongsController < ApplicationController
   def share
     @song.share_on_facebook(current_user, url_for(:action => :show, :id => @song.id, :host => 'www.plinq.co'), params[:message])
     redirect_to @song
+  end
+
+  def played
+    @song.increment_play_count!
+    render :nothing => true
+  end
+
+  def listened
+    @song.increment_listen_count!
+    render :nothing => true
   end
 end

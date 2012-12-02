@@ -10,10 +10,14 @@ class P.Views.Song extends Backbone.View
 
   events: ->
     "click .shareButton": "share"
-    "click .playButton": "playRecording"
+    "click .playRecordingButton": "playRecording"
+    "click .playSongButton": "playSong"
 
   playRecording: ->
     @song.recordingSong.play() if @song.recordingSong?
+
+  playSong: ->
+    @song.play()
 
   share: ->
     @song.shareRecording()

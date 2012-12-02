@@ -25,6 +25,8 @@ body {
   width: 100%;
 }
 
+.modal { color: #000; }
+
 #hud{
   color: #fff;
   width: 100%;
@@ -94,24 +96,40 @@ body {
     .shareButton:active {
       background:image-url('fb_share_button_downstate.png') no-repeat;
     }
-
-    .playButton {
-      cursor: pointer;
-      background: image-url('play_button_metal.png') no-repeat;
-      width: 40px;
-      height: 39px;
-      margin-right: 2px;
-      float: left;
-    }
-
-    .playButton:hover {
-      background:image-url('play_button_hover.png') no-repeat;
-    }
-
-    .playButton:active {
-      background:image-url('play_button_metal_downstate.png') no-repeat;
-    }
   }
+}
+
+.playButton {
+  cursor: pointer;
+  background: image-url('play_button_metal.png') no-repeat;
+  width: 40px;
+  height: 39px;
+  margin-right: 2px;
+  float: left;
+}
+
+.playButton:hover {
+  background:image-url('play_button_hover.png') no-repeat;
+}
+
+.playButton:active {
+  background:image-url('play_button_metal_downstate.png') no-repeat;
+}
+
+.learnSongButton {
+  cursor: pointer;
+  background: image-url('learn_button.png') no-repeat;
+  width: 128px;
+  height: 39px;
+  margin-right: 2px;
+}
+
+.learnSongButton:hover {
+  background:image-url('learn_button_hover.png') no-repeat;
+}
+
+.learnSongButton:active {
+  background:image-url('learn_button_downstate.png') no-repeat;
 }
 
 #keyboard_wrapper {

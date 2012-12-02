@@ -19,6 +19,7 @@ class P.Routers.Router extends Backbone.Router
     P.keyboard.setup()
     P.songView = new P.Views.Song(el: $('#song_wrapper'), song: song)
 
+    $('.play_modal').modal() if P.show_play_modal == true
     #view = new P.Views.Keyboard()
     #$("#app").html(view.render().el)
 
