@@ -2,4 +2,9 @@
   .title= @song.get('title')
   - if @song.get('artist')?
     .artist= @song.get('artist')
+
+  #key_groups
+    - for note in @song.nextNotes()
+      .left.key_group= note.toUpperCase()
   %a.btn.btn-large.share{:href => '#'} Share on Facebook
+.clear

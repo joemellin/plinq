@@ -4,14 +4,15 @@ class P.Views.Song extends Backbone.View
   initialize: (options) ->
     _.bindAll(this, 'render')
     @song = options.song
-    @song.bind 'change', => @render()
+   # @song.bind 'change', => @render()
+    @song.bind 'change:at', => @render()
     @render()
 
   events: ->
       "click .share" : "share"
 
   share: ->
-    window.location = "/songs/#{@song.id}/share"
+    @song.shareRecording()
 
   render: ->
     @.$el.html(@template(song: @song, user: P.user))

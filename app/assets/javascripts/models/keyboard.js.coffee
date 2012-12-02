@@ -41,8 +41,6 @@ class P.Models.Keyboard extends Backbone.Model
     $('.save_song').click ->
       kb.saveSong()
 
-    @updateHud()
-
   saveSong: ->
     @song.save().success ->
       alert('Your song has been saved!')
@@ -58,9 +56,7 @@ class P.Models.Keyboard extends Backbone.Model
     if btn.hasClass('btn-success') || force_stop
       @stopRecording(dont_control_song)
     else
-      unless dont_control_song
-        P.keyboard.song = new P.Models.Song() unless P.keyboard.song.isNew()
-        P.keyboard.song.startRecording()
+      @startRecording() unless dont_control_song
       btn.removeClass('btn-danger').addClass('btn-success')
       btn.find('i').addClass('icon-stop').removeClass('icon-volume-up')
 
@@ -72,6 +68,10 @@ class P.Models.Keyboard extends Backbone.Model
     else
       P.keyboard.song.play() unless dont_control_song
       btn.find('i').removeClass('icon-play').addClass('icon-pause')
+
+  startRecording: ->
+    P.keyboard.song = new P.Models.Song() unless P.keyboard.song.isNew()
+    P.keyboard.song.startRecording()
 
   stopRecording: (dont_control_song = false) ->
     btn = $('.start_recording')
@@ -98,18 +98,11 @@ class P.Models.Keyboard extends Backbone.Model
     setTimeout( =>
       @resetKeys()
     , 130)
-    @updateHud()
 
   startTracking: ->
     @stopRecording()
     @song.startTracking()
     $('.learn i').addClass('btn-success')
-
-  updateHud: ->
-    $('#key_groups').html('')
-    for note in @song.nextNotes()
-      keyboard_key = @get('reverse_keyboard_mappings')[note[0]]
-      $('#key_groups').append('<div class="left key_group">' + keyboard_key.toUpperCase() + '</div>') if keyboard_key?
 
   writeAudioFiles: ->
     for key in @get('keys')
