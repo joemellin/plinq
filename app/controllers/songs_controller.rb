@@ -4,12 +4,12 @@ class SongsController < ApplicationController
   respond_to :html, :json
 
   def index
-    @songs = Song.featured.asc(:created_at).limit(20)
+    load_songs
     respond_with(@songs)
   end
 
   def show
-    @songs = Song.featured.asc(:created_at).limit(20)
+    load_songs
     @show_play_modal = (user_signed_in? && (@song.user.id == current_user.id)) ? true : false
     respond_to do |format|
       format.html { render :action => :song}

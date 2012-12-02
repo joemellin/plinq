@@ -8,10 +8,15 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def load_songs
+    @songs = Song.featured.asc(:created_at).limit(20)
+  end
+
   def login_required
     if user_signed_in?
       return true
     else
+
       redirect_to '/auth/facebook'
       return false
     end
