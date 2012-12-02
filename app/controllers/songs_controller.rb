@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  before_filter :login_required, :except => [:index, :show]
+  before_filter :login_required, :except => [:index, :show, :played, :listened]
   load_and_authorize_resource :except => [:index]
   respond_to :html, :json
 
