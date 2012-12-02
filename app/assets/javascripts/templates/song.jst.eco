@@ -1,7 +1,0 @@
-<div class="song">
-  <div class="title"><%= @song.get('title') %></div>
-  <% if @song.get('artist')?: %>
-    <div class="artist"><%= @song.get('artist') %></div>
-  <% end %>
-  <a href="#" class="btn btn-large share">Share on Facebook</div>
-</div>

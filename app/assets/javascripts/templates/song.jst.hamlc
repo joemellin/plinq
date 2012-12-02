@@ -1,0 +1,5 @@
+.song
+  .title= @song.get('title')
+  - if @song.get('artist')?
+    .artist= @song.get('artist')
+  %a.btn.btn-large.share{:href => '#'} Share on Facebook
