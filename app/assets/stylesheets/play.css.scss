@@ -15,14 +15,11 @@ body {
 .right { float: right; }
 .clear { clear: both; }
 
-.controls {
+.MYcontrols {
   padding: 10px;
-<<<<<<< HEAD
   background: image-url('piano_bg.png');
   height: 300px;
-=======
-  max-width: 110px;
->>>>>>> f9a55131617c924250f5f32e5babc98423f5a798
+  width: 100%;
 }
 
 #hud{

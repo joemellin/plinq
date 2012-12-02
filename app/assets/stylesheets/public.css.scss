@@ -6,7 +6,7 @@
 
 .sharewell {
   background: image-url('piano_bar_empty_box.png');
-  width: 203px;
+  width: 202px;
   height: 42px;
 }
 
@@ -16,4 +16,59 @@
 
 .center {
   text-align: center;
+}
+
+.shareButton {
+  background:image-url('fb_share_button_2.png') ;
+  width: 157px;
+  height: 39px;
+}
+
+.shareButton:hover {
+  background:image-url('fb_share_button_hover.png') ;
+  width: 157px;
+  height: 39px;
+}
+
+.shareButton:active {
+  background:image-url('fb_share_button_downstate.png') ;
+  width: 157px;
+  height: 39px;
+}
+
+.playButton {
+  background:image-url('play_button_metal.png') ;
+  width: 40px;
+  height: 39px;
+}
+
+.playButton:hover {
+  background:image-url('play_button_hover.png') ;
+  width: 40px;
+  height: 39px;
+}
+
+.playButton:active {
+  background:image-url('play_button_metal_downstate.png') ;
+  width: 40px;
+  height: 39px;
+}
+
+
+.learnButton {
+  background:image-url('learn_song_button.png') ;
+  width: 128px;
+  height: 39px;
+}
+
+.learnButton:hover {
+  background:image-url('learn_button_hover.png') ;
+  width: 128px;
+  height: 39px;
+}
+
+.learnButton:active {
+  background:image-url('learn_button_downstate.png') ;
+  width: 128px;
+  height: 39px;
 }

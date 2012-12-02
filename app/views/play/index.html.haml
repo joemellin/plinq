@@ -3,10 +3,12 @@
   .clear
 .row{:style => "background: #000 url(#{image_path 'piano_josh_bar.png'}) center top repeat-x;"}
   .right{:style => 'padding: 0px 200px 0px 0px'}
-    .span2{:style => 'padding-top:5px'}
-      .sharewell{:style => 'padding: 3px 0px 0px 2px'}
-        = image_tag('play_button.png')
-        = image_tag('fb_share_button.png')
+    .span2{:style => 'padding-top:7px'}
+      .sharewell{:style => 'padding: 3px 0px 0px 3px'}
+        .left.playButton
+        .left{:style => 'padding-left:2px;'}
+          .shareButton
+        .clear
   .right{:style => 'padding: 10px 160px 10px 0px'}= image_tag('piano_bar_loog.png')
   .clear
 #keyboard_wrapper
@@ -31,7 +33,7 @@
       #cst.blacks
       #dst.blacks
 
-.controls
+.MYcontrols
   - if user_signed_in? && current_user.admin?
     .btn.btn-danger.start_recording
       %i.icon-volume-up
