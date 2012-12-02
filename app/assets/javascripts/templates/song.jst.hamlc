@@ -11,7 +11,12 @@
 .runnerboard
   .logo_wrapper
     .logo
-  .sharewell
-    .playButton
-    .shareButton{:style => 'padding-left:2px;'}
-    .clear
+  - if @song.pctCompletePlayingSong() < 100
+    .sharewell
+      .progress{:style => 'width: 200px'}
+        .bar.bar-success{:style => "width: #{@song.pctCompletePlayingSong()}%"}
+  - else
+    .sharewell
+      .playButton
+      .shareButton{:style => 'padding-left:2px;'}
+      .clear

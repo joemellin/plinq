@@ -39,7 +39,7 @@ body {
   .key_group {
     text-align: center;
     min-width: 70px;
-    margin: 145px 25px 100px 25px;
+    margin: 145px 25px 200px 25px;
     font-size: 100px;
     line-height: 100px;
     background-color: #333;
@@ -58,7 +58,6 @@ body {
   position: relative;
   background: #000 image-url('piano_josh_bar.png') center top repeat-x;
   height: 56px;
-
   .logo_wrapper {
     padding-top: 8px;
     .logo {
@@ -76,6 +75,9 @@ body {
     right: 10px;
     top: 6px;
     padding: 3px;
+    .progress {
+      height: 39px;
+    }
   
     .shareButton {
       background:image-url('fb_share_button_2.png') no-repeat;

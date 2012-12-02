@@ -43,6 +43,13 @@ class P.Models.Song extends Backbone.Model
       @moveForwardIfCorrectNote(name)
       @recordingSong.addNote(name)
 
+  pctCompletePlayingSong: ->
+    return 0 unless @recordingSong?
+    recorded_notes = @recordingSong.get('notes').length
+    return 0 if recorded_notes == 0
+    two_bars = @get('notes').length * 2
+    Math.round((recorded_notes / two_bars) * 100)
+
   addNote: (note) ->
     notes = @get('notes')
     if notes.length > 0 && @get('last_note_at') != null
