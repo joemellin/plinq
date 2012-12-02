@@ -1,7 +1,7 @@
 class P.Models.Song extends Backbone.Model
   defaults:
     at: 0
-    tracking: false
+    tracking: true # by default set to tracking
     recording: false
     paused: false
     speed: 1
@@ -96,6 +96,11 @@ class P.Models.Song extends Backbone.Model
 
   nextNotes: ->
     @get('notes')[@get('at')..]
+
+  save: ->
+    @set('title', $('#song_title').val()) if $('#song_title').length > 0
+    @set('artist', $('#song_artist').val()) if $('#song_artist').length > 0
+    super
 
 class P.Collections.Songs extends Backbone.Collection
   model: P.Models.Song

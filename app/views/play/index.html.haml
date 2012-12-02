@@ -32,20 +32,21 @@
       #dst.blacks
 
 .controls
-  .btn.btn-danger.start_recording
-    %i.icon-volume-up
+  - if user_signed_in? && current_user.admin?
+    .btn.btn-danger.start_recording
+      %i.icon-volume-up
 
-  .btn.btn-info.play_recording
-    %i.icon-play
-
-  %br/
-  %br/
+    .btn.btn-info.play_recording
+      %i.icon-play
   
-  .btn.btn-info.learn
-    %i.icon-star
+    .btn.btn-info.learn
+      %i.icon-star
 
-  .btn.btn-info.save_song
-    %i.icon-arrow-down
+    .btn.btn-info.save_song
+      %i.icon-arrow-down
+
+    = text_field_tag 'song[title]', @song.title, :placeholder => 'Title', :id => 'song_title'
+    = text_field_tag 'song[artist]', @song.artist, :placeholder => 'Artist', :id => 'song_artist'
 
 
 = javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json} }); });"

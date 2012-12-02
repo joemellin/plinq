@@ -1,19 +1,18 @@
 source 'https://rubygems.org'
-
+ruby "1.9.3"
 gem 'rails', '3.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 #gem 'sqlite3'
-gem "mongoid", :git => "git@github.com:mongoid/mongoid.git"
+gem "mongoid" #, :git => "git@github.com:mongoid/mongoid.git"
 gem 'bson_ext'
 gem 'devise'
 gem 'cancan'
 gem "omniauth", ">= 1.0"
 gem "omniauth-twitter"
 gem "omniauth-facebook"
-
 
 
 # Gems used only for assets and not required

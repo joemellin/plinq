@@ -1,10 +1,23 @@
 .row
   .span12
+<<<<<<< HEAD
     .pagetitle The Plinq Music Catalog
 .row 
   .span2.offset2{:align => 'right', :style => 'margin-left: 0'} [img]
   .span6.center
+=======
+    %h1 The Plinq Music Catalog
+.row
+  .span1.offset2{:align => 'right', :style => 'margin-left: 0'} [img]
+  .span6
+>>>>>>> f9a55131617c924250f5f32e5babc98423f5a798
     %h1 Song Title
     %h2 Artist Title
-  .span2 
-    = link_to "Learn Song", '#', :class => "btn btn-warning"
+- @songs.each do |s|
+  .row
+    .span1.offset2{:align => 'right', :style => 'margin-left: 0'} [img]
+    .span6
+      %h1= s.title
+      %h2= s.artist
+    .span2 
+      = link_to "Learn Song", song_path(s), :class => "btn btn-warning"
