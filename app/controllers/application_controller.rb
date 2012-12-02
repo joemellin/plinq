@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     else
       if params[:message].present?
         session[:share_song_id] = params[:id]
-        session[:share_message] = params[:message]
+        session[:share_song_message] = params[:message]
       end
       redirect_to '/auth/facebook'
       return false
