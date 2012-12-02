@@ -5,7 +5,7 @@ class Authentication
   field :token, :type => String
   field :secret, :type => String
 
-  belongs_to :user
+  embedded_in :user
 
   attr_accessible :provider, :uid, :token, :secret
 

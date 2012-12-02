@@ -14,6 +14,7 @@ gem "omniauth", ">= 1.0"
 gem "omniauth-twitter"
 gem "omniauth-facebook"
 gem 'koala'
+gem 'eco'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -59,23 +59,23 @@ class P.Models.Keyboard extends Backbone.Model
       @stopRecording(dont_control_song)
     else
       unless dont_control_song
-        keyboard.song = new P.Models.Song() unless keyboard.song.isNew()
-        keyboard.song.startRecording()
+        P.keyboard.song = new P.Models.Song() unless P.keyboard.song.isNew()
+        P.keyboard.song.startRecording()
       btn.removeClass('btn-danger').addClass('btn-success')
       btn.find('i').addClass('icon-stop').removeClass('icon-volume-up')
 
   togglePlayButton: (dont_control_song = false) ->
     btn = $('.play_recording')
     if btn.find('i').hasClass('icon-pause')
-      keyboard.song.pause() unless dont_control_song
+      P.keyboard.song.pause() unless dont_control_song
       btn.find('i').removeClass('icon-pause').addClass('icon-play')
     else
-      keyboard.song.play() unless dont_control_song
+      P.keyboard.song.play() unless dont_control_song
       btn.find('i').removeClass('icon-play').addClass('icon-pause')
 
   stopRecording: (dont_control_song = false) ->
     btn = $('.start_recording')
-    keyboard.song.stopRecording() unless dont_control_song
+    P.keyboard.song.stopRecording() unless dont_control_song
     btn.removeClass('btn-success').addClass('btn-danger')
     btn.find('i').removeClass('icon-stop').addClass('icon-volume-up')
 

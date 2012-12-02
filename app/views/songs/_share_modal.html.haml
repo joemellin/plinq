@@ -1,0 +1,9 @@
+.share_modal.modal.hide
+  .modal-header
+    %button.close{:type => 'button', 'data-dismiss' => 'modal'} x
+  .modal-body
+    = form_tag share_song_path(@song) do
+      What would you like to tell your friends?
+      = text_area_tag 'message', Song.default_share_message, :class => 'span4'
+      = submit_tag 'Share on Facebook'
+   

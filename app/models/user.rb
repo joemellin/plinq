@@ -38,7 +38,7 @@ class User
 
 
   has_many :songs
-  has_many :authentications
+  embeds_many :authentications
 
   ## Confirmable
   # field :confirmation_token,   :type => String
@@ -57,6 +57,17 @@ class User
   validates_presence_of :name
   validates_uniqueness_of :name, :email, :case_sensitive => false
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me
+
+  def facebook_authentication
+    unless @facebook_authentication.present?
+      @facebook_authentication = authentications.where(:provider => 'facebook').first
+    end
+    @facebook_authentication
+  end
+
+  def facebook_graph_api
+    Koala::Facebook::GraphAPI.new(self.facebook_authentication.token)
+  end
 
   #
   # OMNIAUTH LOGIC
@@ -89,6 +100,7 @@ class User
           self.email = omniauth['extra']['user_hash']['email'] if omniauth['extra'] && omniauth['extra']['user_hash'] && !omniauth['extra']['user_hash']['email'].blank?
           self.email = omniauth['info']['email'] unless omniauth['info']['email'].blank?
         end
+        #self.remote_pic_url = omniauth['info']['']
         self.email = "#{omniauth['info']['nickname']}@users.facebook.com" if self.email.blank?
         self.location = omniauth['info']['location'] if omniauth['info']['location'].present?
       end
@@ -111,5 +123,13 @@ class User
    # Parameter: provider_name (string)
   def authenticated_for?(provider_name)
     authentications.where(:provider => provider_name).count > 0
+  end
+
+  def as_json(options = {})
+    {
+      :id => self.id,
+      :name => self.name,
+      :pic_url => self.remote_pic_url
+    }
   end
 end

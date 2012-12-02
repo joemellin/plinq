@@ -8,9 +8,14 @@ class P.Routers.Router extends Backbone.Router
 
   index: ->
     song = @songs.first() if @songs?
-    song = new P.Models.Song() unless song
-    window.keyboard = new P.Models.Keyboard(div_name: '#keyboard', song: song)
-    window.keyboard.setup()
+    if song?
+      window.original_song_id = song.id
+    else
+      song = new P.Models.Song()
+    P.keyboard = new P.Models.Keyboard(div_name: '#keyboard', song: song)
+    P.keyboard.setup()
+    P.songview = new P.Views.Song(song: song)
+
     #view = new P.Views.Keyboard()
     #$("#app").html(view.render().el)
 

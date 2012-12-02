@@ -31,13 +31,7 @@ class AuthenticationsController < ApplicationController
         sign_in_and_redirect(:user, user)
       else
         # Extra details are too much to store, so we have to grab just followers count
-        begin
-          fc = omniauth['extra']['raw_info']['followers_count']
-          omniauth.delete('extra')
-          omniauth['extra'] = {'raw_info' => {'followers_count' => fc}}
-        rescue
-          omniauth.delete('extra')
-        end
+        omniauth.delete('extra')
         session[:omniauth] = omniauth
         redirect_to new_user_registration_url
       end

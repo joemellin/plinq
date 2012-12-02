@@ -9,9 +9,11 @@ class ApplicationController < ActionController::Base
   protected
 
   def login_required
-    if authenticate_user!
+    if user_signed_in?
       return true
     else
+      
+      redirect_to '/auth/facebook'
       return false
     end
   end

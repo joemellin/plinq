@@ -1,4 +1,5 @@
 #hud
+  #song_wrapper
   #key_groups
   .clear
 #keyboard_wrapper
@@ -41,4 +42,9 @@
     = text_field_tag 'song[artist]', @song.artist, :placeholder => 'Artist', :id => 'song_artist'
 
 
-= javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json} }); });"
+= javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json}, user: #{user_signed_in? ? current_user.to_json : ''} }); });"
+
+- if user_signed_in?
+  = link_to 'Share Song', share_song_path(@song), :class => 'btn'
+- else
+  = link_to 'Share Song', ''

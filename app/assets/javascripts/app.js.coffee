@@ -1,6 +1,7 @@
 #= require_self
 #= require_tree ./models
-## require_tree ./views
+#= require_tree ./templates
+#= require_tree ./views
 #= require_tree ./routers
 
 window.P =
@@ -10,5 +11,6 @@ window.P =
   Views: {}
   initialize: (data) ->
     songs = new P.Collections.Songs(data.songs)
-    new P.Routers.Router(songs: songs)
+    P.user = if data.user? then new P.Models.User(data.user) else null
+    P.router = new P.Routers.Router(songs: songs)
     Backbone.history.start()

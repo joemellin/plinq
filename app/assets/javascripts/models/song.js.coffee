@@ -21,7 +21,7 @@ class P.Models.Song extends Backbone.Model
 
   stopRecording: ->
     @set('recording', false)
-    keyboard.toggleRecordButton(true, true)
+    P.keyboard.toggleRecordButton(true, true)
 
   startTracking: ->
     @set('tracking', true)
@@ -71,14 +71,14 @@ class P.Models.Song extends Backbone.Model
 
   done: ->
     @set('at', 0)
-    keyboard.togglePlayButton(true)
-    keyboard.updateHud()
+    P.keyboard.togglePlayButton(true)
+    P.keyboard.updateHud()
 
   playNextNotes: ->
     key_and_delay = @get('notes')[@get('at')]
     if key_and_delay?
       @set('at', @get('at') + 1)
-      keyboard.playKey($("##{key_and_delay[0]}"))
+      P.keyboard.playKey($("##{key_and_delay[0]}"))
       if key_and_delay[1]?
         @playIn(@lengthForNote(key_and_delay[1])) 
       else
@@ -100,6 +100,7 @@ class P.Models.Song extends Backbone.Model
   save: ->
     @set('title', $('#song_title').val()) if $('#song_title').length > 0
     @set('artist', $('#song_artist').val()) if $('#song_artist').length > 0
+    @set('original_song_id', window.original_song_id) if window.original_song_id?
     super
 
 class P.Collections.Songs extends Backbone.Collection

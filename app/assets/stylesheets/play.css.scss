@@ -30,6 +30,11 @@ body {
   height: 350px;
   overflow-x: hidden;
   padding: 0 20px 0 20px;
+  #song_wrapper {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+  }
   .key_group {
     text-align: center;
     min-width: 70px;

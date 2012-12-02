@@ -29,6 +29,6 @@ class SongsController < ApplicationController
   end
 
   def share
-    
+    @song.share(current_user, params[:message], share_song_url(@song))
   end
 end

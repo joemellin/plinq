@@ -1,7 +1,13 @@
 Plinq::Application.routes.draw do
   devise_for :users
 
-  resources :songs, :authentications
+  resources :songs do
+    member do
+      post 'share'
+    end
+  end
+
+  resources :authentications
   resources :leaderboard, :only => [:index]
 
   # for omniauth authentications with other providers
