@@ -30,10 +30,11 @@ class SongsController < ApplicationController
       respond_with :head => :ok
     else
       respond_with(:errors => @model.errors.full_messages, :status => 422)
+    end
   end
 
   def share
-    @song.share(current_user, params[:message], share_song_url(@song))
-    respond_with(:head => :ok)
+    @song.share_on_facebook(current_user, url_for(:action => :show, :id => @song.id, :host => 'www.plinq.co'), params[:message])
+    redirect_to @song
   end
 end

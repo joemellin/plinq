@@ -125,7 +125,7 @@ class P.Models.Song extends Backbone.Model
 
   shareRecording: ->
     if @recordingSong?
-      @recordingSong.save().success ->
+      @recordingSong.save().success =>
         window.location = "/songs/#{@recordingSong.get('id')}/share"
 
 

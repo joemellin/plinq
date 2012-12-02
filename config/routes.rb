@@ -3,12 +3,14 @@ Plinq::Application.routes.draw do
 
   resources :songs do
     member do
-      post 'share'
+      match 'share'
     end
   end
 
   resources :authentications
   resources :leaderboard, :only => [:index]
+
+  resources :users, :only => [:show]
 
   # for omniauth authentications with other providers
   match '/auth/:provider/callback' => 'authentications#create'

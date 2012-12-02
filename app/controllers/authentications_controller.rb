@@ -17,7 +17,7 @@ class AuthenticationsController < ApplicationController
       current_user.apply_omniauth(omniauth)
       #current_user.geocode_from_ip(request.remote_ip) if current_user.location.blank?
       if current_user.save
-        flash[:notice] = "#{omniauth['provider']} authentication successful."
+        #flash[:notice] = "#{omniauth['provider']} authentication successful."
       else
         flash[:alert] = "Sorry but you could't be authenticated. Please try again:"
       end
@@ -28,9 +28,9 @@ class AuthenticationsController < ApplicationController
       user.email = "#{user.twitter}@users.plinq.com" if omniauth['provider'] == 'twitter'
       if user.save
         remember_me(user) # set remember me cookie
-        sign_in_and_redirect(:user, user)
+        sign_in_and_redirect(user)
       else
-        # Extra details are too much to store, so we have to grab just followers count
+        # Extra details are too much to store
         omniauth.delete('extra')
         session[:omniauth] = omniauth
         redirect_to new_user_registration_url

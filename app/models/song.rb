@@ -39,8 +39,8 @@ class Song
 
   def share_on_facebook(user, link_to_song, message = nil)
     message ||= Song.default_share_message
-    if post = user.facebook_graph_api.put_wall_post(message, {:link => link_to_song})
-      self.shares[user.id] = post.id
+    if post = user.facebook_api.put_wall_post(message, {:link => link_to_song})
+      self.facebook_shares[user.id] = post.id
       true
     else
       false

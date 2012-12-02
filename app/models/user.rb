@@ -65,8 +65,8 @@ class User
     @facebook_authentication
   end
 
-  def facebook_graph_api
-    Koala::Facebook::GraphAPI.new(self.facebook_authentication.token)
+  def facebook_api
+    Koala::Facebook::API.new(self.facebook_authentication.token)
   end
 
   #
