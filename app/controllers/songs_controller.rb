@@ -16,6 +16,7 @@ class SongsController < ApplicationController
     @song = Song.new(params[:song])
     @song.user = current_user if current_user.present?
     @song.save
+    @song.share(current_user, params[:message], share_song_url(@song)) if params[:share].present?
     respond_with(@song)
   end
 
@@ -25,10 +26,14 @@ class SongsController < ApplicationController
   end
 
   def destroy
-    @song.destroy
+    if @song.destroy
+      respond_with :head => :ok
+    else
+      respond_with(:errors => @model.errors.full_messages, :status => 422)
   end
 
   def share
     @song.share(current_user, params[:message], share_song_url(@song))
+    respond_with(:head => :ok)
   end
 end

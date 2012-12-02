@@ -15,3 +15,4 @@ window.P =
     P.user = if data.user? then new P.Models.User(data.user) else null
     P.router = new P.Routers.Router(songs: songs)
     Backbone.history.start()
+    #P.router.navigate('/')

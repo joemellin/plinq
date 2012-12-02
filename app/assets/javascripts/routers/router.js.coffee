@@ -1,10 +1,11 @@
 class P.Routers.Router extends Backbone.Router
-  initialize: (options) ->
-    @songs = options.songs if options.songs?
-
   routes:
     '': 'index'
-    'show/:id' : 'show'
+    'show/:id': 'show'
+    'leaderboard': 'leaderboard'
+
+  initialize: (options) ->
+    @songs = options.songs if options.songs?
 
   index: ->
     song = @songs.first() if @songs?
@@ -23,3 +24,6 @@ class P.Routers.Router extends Backbone.Router
 
   show: (id) ->
     console.log "show song with id #{id}"
+
+  leaderboard: ->
+    P.leaderboardView = new P.Views.Leaderboard(el: $('#leaderboard'), songs: @songs)

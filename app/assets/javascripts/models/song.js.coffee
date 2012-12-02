@@ -34,6 +34,10 @@ class P.Models.Song extends Backbone.Model
       @set('at', @get('at') + 1) if note == @get('notes')[@get('at')][0]
     @set('at', 0) if @get('at') != 0 && !@get('notes')[@get('at')]?
 
+  keyPlayed: (name) ->
+    @addNote(name) if @isRecording()
+    @song.moveForwardIfCorrectNote(name) if @isTracking()
+
   addNote: (note) ->
     notes = @get('notes')
     if notes.length > 0 && @get('last_note_at') != null

@@ -4,6 +4,7 @@
   .clear
 #keyboard_wrapper
 
+
 .controls
   - if user_signed_in? && current_user.admin?
     .btn.btn-danger.start_recording
@@ -23,8 +24,3 @@
 
 
 = javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json}, user: #{user_signed_in? ? current_user.to_json : ''} }); });"
-
-- if user_signed_in?
-  = link_to 'Share Song', share_song_path(@song), :class => 'btn'
-- else
-  = link_to 'Share Song', ''

@@ -31,7 +31,9 @@ class Song
       :id => self.id,
       :title => self.title,
       :artist => self.artist,
-      :notes => self.notes
+      :notes => self.notes,
+      :user_id => self.user.id,
+      :user_name => self.user.name
     }
   end
 

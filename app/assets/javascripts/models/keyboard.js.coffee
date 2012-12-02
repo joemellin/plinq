@@ -94,8 +94,7 @@ class P.Models.Keyboard extends Backbone.Model
     sound.currentTime = 0
     sound.play()
     key.addClass('active')
-    @song.addNote(name) if dont_record != true && @song.isRecording()
-    @song.moveForwardIfCorrectNote(name) if @song.isTracking()
+    @song.keyPlayed(name)
     setTimeout( =>
       @resetKeys()
     , 130)
