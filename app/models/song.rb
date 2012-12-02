@@ -42,9 +42,9 @@ class Song
       :artist => self.artist,
       :notes => self.notes,
       :listen_count => self.listen_count,
-      :user_id => self.user.id,
-      :user_name => self.user.name,
-      :user_pic => self.user.remote_pic_url
+      :user_id => self.user.present? ? self.user.id : nil,
+      :user_name => self.user.present? ? self.user.name : nil,
+      :user_pic => self.user.present? ? self.user.remote_pic_url : nil
     }
   end
 

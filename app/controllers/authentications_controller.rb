@@ -28,8 +28,9 @@ class AuthenticationsController < ApplicationController
       user.email = "#{user.twitter}@users.plinq.com" if omniauth['provider'] == 'twitter'
       if user.save
         remember_me(user) # set remember me cookie
-        sign_in_and_redirect(user)
+        sign_in_and_redirect(:user, user)
       else
+        logger.info user.errors.full_messages.join(', ')
         # Extra details are too much to store
         omniauth.delete('extra')
         session[:omniauth] = omniauth

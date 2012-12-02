@@ -1,5 +1,5 @@
 class SongsController < ApplicationController
-  before_filter :login_required, :except => [:index, :show, :played, :listened]
+  before_filter :login_required, :except => [:index, :show, :played, :listened, :create]
   load_and_authorize_resource :except => [:index]
   respond_to :html, :json
 
@@ -21,7 +21,7 @@ class SongsController < ApplicationController
     @song = Song.new(params[:song])
     @song.user = current_user if current_user.present?
     @song.save
-    @song.share(current_user, params[:message], share_song_url(@song)) if params[:share].present?
+    #@song.share(current_user, params[:message], share_song_url(@song)) if params[:share].present?
     respond_with(@song)
   end
 

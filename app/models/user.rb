@@ -14,8 +14,8 @@ class User
   field :email,              :type => String, :default => ""
   field :encrypted_password, :type => String, :default => ""
 
-  validates_presence_of :email
-  validates_presence_of :encrypted_password, :if => :password_required?
+  #validates_presence_of :email
+  #validates_presence_of :encrypted_password, :if => :password_required?
   
   ## Recoverable
   field :reset_password_token,   :type => String
@@ -36,9 +36,8 @@ class User
   field :twitter, :type => String
   field :location, :type => String
 
-
   has_many :songs
-  embeds_many :authentications
+  has_many :authentications
 
   ## Confirmable
   # field :confirmation_token,   :type => String
@@ -100,7 +99,7 @@ class User
           self.email = omniauth['extra']['user_hash']['email'] if omniauth['extra'] && omniauth['extra']['user_hash'] && !omniauth['extra']['user_hash']['email'].blank?
           self.email = omniauth['info']['email'] unless omniauth['info']['email'].blank?
         end
-        self.remote_pic_url = omniauth['info']['image']
+        #self.remote_pic_url = omniauth['info']['image']
         self.email = "#{omniauth['info']['nickname']}@users.facebook.com" if self.email.blank?
         self.location = omniauth['info']['location'] if omniauth['info']['location'].present?
       end
