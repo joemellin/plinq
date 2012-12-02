@@ -29,8 +29,9 @@ body {
   color: #fff;
   width: 100%;
   #song_wrapper {
-    background: #000 image-url('arealhero.png') no-repeat center;
     .song {
+      height: 400px;
+      background: #000 image-url('arealhero.jpg') no-repeat center top;
       padding: 0 20px 0 20px;
       overflow-x: hidden;
     }
@@ -38,7 +39,7 @@ body {
   .key_group {
     text-align: center;
     min-width: 70px;
-    margin: 100px 25px 100px 25px;
+    margin: 145px 25px 100px 25px;
     font-size: 100px;
     line-height: 100px;
     background-color: #333;
@@ -48,6 +49,7 @@ body {
   }
   .key_group:first-child{
     border: 5px solid green;
+    padding-top: 7px;
   }
 }
 
