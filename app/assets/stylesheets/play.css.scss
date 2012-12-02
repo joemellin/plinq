@@ -11,27 +11,34 @@ body {
   padding: 0;
 }
 
+.navbar { margin-bottom: 0px; }
+.navbar-inner { border-radius: 0px;}
+
 .left { float: left; }
 .right { float: right; }
 .clear { clear: both; }
 
-.MYcontrols {
+.the_controls {
   padding: 10px;
   background: image-url('piano_bg.png');
-  height: 300px;
+  height: 400px;
   width: 100%;
 }
 
 #hud{
   color: #fff;
-  background: #000 image-url('arealhero.png');
   width: 100%;
-  height: 450px;
-  overflow-x: hidden;
+  #song_wrapper {
+    background: #000 image-url('arealhero.png');
+    .song {
+      padding: 0 20px 0 20px;
+      overflow-x: hidden;
+    }
+  }
   .key_group {
     text-align: center;
     min-width: 70px;
-    margin: 100px 25px 0px 25px;
+    margin: 100px 25px 100px 25px;
     font-size: 100px;
     line-height: 100px;
     background-color: #333;
@@ -43,6 +50,31 @@ body {
     border: 2px solid red;
   }
 }
+
+.runnerboard {
+  width: 100%;
+  position: relative;
+  background: #000 image-url('piano_josh_bar.png') center top repeat-x;
+  height: 56px;
+  .logo_wrapper {
+    padding-top: 8px;
+    .logo {
+      margin-left: auto; 
+      margin-right: auto;
+      left: 50%;
+      background: image-url('piano_bar_logo.png') no-repeat;
+      width: 75px;
+      height: 38px;
+    }
+  }
+  
+  .sharewell {
+    position: absolute;
+    right: 10px;
+    top: 9px;
+  }
+}
+
 #keyboard_wrapper {
   #keyboard{
     position: absolute;

@@ -41,8 +41,6 @@ class P.Models.Keyboard extends Backbone.Model
     $('.save_song').click ->
       kb.saveSong()
 
-    @updateHud()
-
   saveSong: ->
     @song.save().success ->
       alert('Your song has been saved!')
@@ -58,24 +56,26 @@ class P.Models.Keyboard extends Backbone.Model
     if btn.hasClass('btn-success') || force_stop
       @stopRecording(dont_control_song)
     else
-      unless dont_control_song
-        keyboard.song = new P.Models.Song() unless keyboard.song.isNew()
-        keyboard.song.startRecording()
+      @startRecording() unless dont_control_song
       btn.removeClass('btn-danger').addClass('btn-success')
       btn.find('i').addClass('icon-stop').removeClass('icon-volume-up')
 
   togglePlayButton: (dont_control_song = false) ->
     btn = $('.play_recording')
     if btn.find('i').hasClass('icon-pause')
-      keyboard.song.pause() unless dont_control_song
+      P.keyboard.song.pause() unless dont_control_song
       btn.find('i').removeClass('icon-pause').addClass('icon-play')
     else
-      keyboard.song.play() unless dont_control_song
+      P.keyboard.song.play() unless dont_control_song
       btn.find('i').removeClass('icon-play').addClass('icon-pause')
+
+  startRecording: ->
+    P.keyboard.song = new P.Models.Song() unless P.keyboard.song.isNew()
+    P.keyboard.song.startRecording()
 
   stopRecording: (dont_control_song = false) ->
     btn = $('.start_recording')
-    keyboard.song.stopRecording() unless dont_control_song
+    P.keyboard.song.stopRecording() unless dont_control_song
     btn.removeClass('btn-success').addClass('btn-danger')
     btn.find('i').removeClass('icon-stop').addClass('icon-volume-up')
 
@@ -94,23 +94,15 @@ class P.Models.Keyboard extends Backbone.Model
     sound.currentTime = 0
     sound.play()
     key.addClass('active')
-    @song.addNote(name) if dont_record != true && @song.isRecording()
-    @song.moveForwardIfCorrectNote(name) if @song.isTracking()
+    @song.keyPlayed(name)
     setTimeout( =>
       @resetKeys()
     , 130)
-    @updateHud()
 
   startTracking: ->
     @stopRecording()
     @song.startTracking()
     $('.learn i').addClass('btn-success')
-
-  updateHud: ->
-    $('#key_groups').html('')
-    for note in @song.nextNotes()
-      keyboard_key = @get('reverse_keyboard_mappings')[note[0]]
-      $('#key_groups').append('<div class="left key_group">' + keyboard_key.toUpperCase() + '</div>') if keyboard_key?
 
   writeAudioFiles: ->
     for key in @get('keys')

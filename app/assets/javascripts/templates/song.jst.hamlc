@@ -1,0 +1,18 @@
+.song
+  .title= @song.get('title')
+  - if @song.get('artist')?
+    .artist= @song.get('artist')
+
+  #key_groups
+    - for note in @song.nextNotes()
+      .left.key_group= note.toUpperCase()
+    .clear
+
+.runnerboard
+  .logo_wrapper
+    .logo
+  .sharewell
+    .left.playButton
+    .left.shareButton{:style => 'padding-left:2px;'}
+    .clear
+  .clear

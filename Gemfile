@@ -13,6 +13,8 @@ gem 'cancan'
 gem "omniauth", ">= 1.0"
 gem "omniauth-twitter"
 gem "omniauth-facebook"
+gem 'koala'
+gem 'eco'
 
 
 # Gems used only for assets and not required
@@ -25,6 +27,9 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+
+  gem 'haml_coffee_assets'
+  gem 'execjs'
 end
 
 gem 'jquery-rails'

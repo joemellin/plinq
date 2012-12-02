@@ -6,6 +6,8 @@ class P.Models.Song extends Backbone.Model
     paused: false
     speed: 1
     last_note_at: null
+    times_played: 0
+    recordingSong: null
     notes: []
 
   urlRoot: '/songs'
@@ -21,7 +23,7 @@ class P.Models.Song extends Backbone.Model
 
   stopRecording: ->
     @set('recording', false)
-    keyboard.toggleRecordButton(true, true)
+    P.keyboard.toggleRecordButton(true, true)
 
   startTracking: ->
     @set('tracking', true)
@@ -32,7 +34,14 @@ class P.Models.Song extends Backbone.Model
   moveForwardIfCorrectNote: (note) ->
     if @get('notes')[@get('at')]?
       @set('at', @get('at') + 1) if note == @get('notes')[@get('at')][0]
-    @set('at', 0) if @get('at') != 0 && !@get('notes')[@get('at')]?
+    @done() if @get('at') != 0 && !@get('notes')[@get('at')]?
+
+  keyPlayed: (name) ->
+    @addNote(name) if @isRecording()
+    if @isTracking()
+      @recordingSong = new P.Models.Song(title: @get('title'), artist: @get('artist')) unless @recordingSong
+      @moveForwardIfCorrectNote(name)
+      @recordingSong.addNote(name)
 
   addNote: (note) ->
     notes = @get('notes')
@@ -71,14 +80,21 @@ class P.Models.Song extends Backbone.Model
 
   done: ->
     @set('at', 0)
-    keyboard.togglePlayButton(true)
-    keyboard.updateHud()
+    @set('times_played', @get('times_played') + 1)
+    if @recordingSong?
+      two_bars = @get('notes').length * 2
+      recorded_notes = @recordingSong.get('notes')
+      # just keep last two bars played in recording song
+      if recorded_notes.length > two_bars
+        end_at = recorded_notes.length - 1
+        last_two_bars_start = end_at - two_bars
+        @recordingSong.set('notes', recorded_notes[last_two_bars_start..end_at]) if recorded_notes.length > last_two_bars_start
 
   playNextNotes: ->
     key_and_delay = @get('notes')[@get('at')]
     if key_and_delay?
       @set('at', @get('at') + 1)
-      keyboard.playKey($("##{key_and_delay[0]}"))
+      P.keyboard.playKey($("##{key_and_delay[0]}"))
       if key_and_delay[1]?
         @playIn(@lengthForNote(key_and_delay[1])) 
       else
@@ -95,12 +111,23 @@ class P.Models.Song extends Backbone.Model
       ,milliseconds_delay)
 
   nextNotes: ->
-    @get('notes')[@get('at')..]
+    notes = @get('notes')[@get('at')..]
+    tmp = []
+    for note in notes
+      tmp.push P.keyboard.get('reverse_keyboard_mappings')[note[0]]
+    tmp
 
   save: ->
     @set('title', $('#song_title').val()) if $('#song_title').length > 0
     @set('artist', $('#song_artist').val()) if $('#song_artist').length > 0
+    @set('original_song_id', window.original_song_id) if window.original_song_id?
     super
+
+  shareRecording: ->
+    if @recordingSong?
+      @recordingSong.save().success =>
+        window.location = "/songs/#{@recordingSong.get('id')}/share"
+
 
 class P.Collections.Songs extends Backbone.Collection
   model: P.Models.Song

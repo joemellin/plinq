@@ -1,8 +1,16 @@
 Plinq::Application.routes.draw do
   devise_for :users
 
-  resources :songs, :authentications
+  resources :songs do
+    member do
+      match 'share'
+    end
+  end
+
+  resources :authentications
   resources :leaderboard, :only => [:index]
+
+  resources :users, :only => [:show, :edit, :update]
 
   # for omniauth authentications with other providers
   match '/auth/:provider/callback' => 'authentications#create'

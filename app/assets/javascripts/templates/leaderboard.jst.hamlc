@@ -1,0 +1,11 @@
+.row
+  .span12
+    %h1 The Official Plinq Leaderboard of Awesomness... Boom!
+- for song in @songs
+  .row
+    .span1.offset2{:align => 'right', :style => 'margin-left: 0'} [img]
+    .span6
+      %h1= song.get('title')
+      %h2 Plinq'd by: #{song.get('user_name')}
+    .span2
+      %a.btn.btn-warning{:href => "/songs/#{song.get('id')}"} Learn Song

@@ -12,10 +12,7 @@
 //
 //= require ./vendor/underscore
 //= require ./vendor/jquery.1.8.3.min
+//= require ./vendor/backbone.min
 //= require_tree ./vendor/
 //= require jquery_ujs
-//= require ./vendor/backbone.min
-//= require backbone
-
-
-// require_tree .
+//= require app
