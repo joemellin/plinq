@@ -6,5 +6,13 @@
   #key_groups
     - for note in @song.nextNotes()
       .left.key_group= note.toUpperCase()
-  %a.btn.btn-large.share{:href => '#'} Share on Facebook
-.clear
+    .clear
+
+.runnerboard
+  .logo_wrapper
+    .logo
+  .sharewell
+    .left.playButton
+    .left.shareButton{:style => 'padding-left:2px;'}
+    .clear
+  .clear

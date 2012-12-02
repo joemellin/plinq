@@ -18,22 +18,22 @@ body {
 .right { float: right; }
 .clear { clear: both; }
 
-.controls {
+.the_controls {
   padding: 10px;
-  max-width: 110px;
+  background: image-url('piano_bg.png');
+  height: 300px;
+  width: 100%;
 }
 
 #hud{
   color: #fff;
-  background-color: #000;
   width: 100%;
-  height: 350px;
-  overflow-x: hidden;
-  padding: 0 20px 0 20px;
   #song_wrapper {
-    position: absolute;
-    top: 50px;
-    left: 20px;
+    background: #000 image-url('arealhero.png');
+    .song {
+      padding: 0 20px 0 20px;
+      overflow-x: hidden;
+    }
   }
   .key_group {
     text-align: center;
@@ -50,6 +50,31 @@ body {
     border: 2px solid red;
   }
 }
+
+.runnerboard {
+  width: 100%;
+  position: relative;
+  background: #000 image-url('piano_josh_bar.png') center top repeat-x;
+  height: 56px;
+  .logo_wrapper {
+    padding-top: 8px;
+    .logo {
+      margin-left: auto; 
+      margin-right: auto;
+      left: 50%;
+      background: image-url('piano_bar_logo.png') no-repeat;
+      width: 75px;
+      height: 38px;
+    }
+  }
+  
+  .sharewell {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+  }
+}
+
 #keyboard_wrapper {
   #keyboard{
     position: absolute;
@@ -57,10 +82,11 @@ body {
     left: 50%;
     width: 80%;
     //height: 80%;
-    height: 350px;
+    height: 300px;
     margin-top: 0;
     margin-left: -40%;
-    box-shadow: 0 0 10px #aaa;
+    box-shadow: 0 0 5px #aaa;
+    background: image-url('piano_bg.png');
     .whites{
       width:10%;
       min-height:100%;
@@ -86,7 +112,7 @@ body {
     .whites.active { background-color: #111; }
     
     .blacks{
-      background-color:#363636;
+      background-color:#212121;
       width:8%;
       min-height:60%;
       max-height:60%;
@@ -94,7 +120,7 @@ body {
       -moz-transition:background-color 0.1s linear;
       -o-transition:background-color 0.1s linear;
       -webkit-transition:background-color 0.1s linear;
-      border-radius:0 0 10px 10px;
+      border-radius:0 0 5px 5px;
     }
     .blacks:hover{
       -moz-box-shadow:inset 0 0 0 1px #333;
@@ -106,7 +132,7 @@ body {
       -webkit-box-shadow:inset 0 0 20px #111;
       box-shadow:inset 0 0 20px #111;
     }
-    .blacks.active { background-color: #aaa; }
+    .blacks.active { background-color: #000; }
 
     #c{float:left;position:absolute;border-left:none;}
     #d{margin-left:10%;position:absolute;}

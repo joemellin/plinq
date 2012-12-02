@@ -9,7 +9,10 @@ class SongsController < ApplicationController
   end
 
   def show
-    respond_with(@song)
+    respond_to do |format|
+      format.html { render :action => :song}
+      format.json { render :json => @song }
+    end
   end
 
   def create

@@ -10,7 +10,7 @@ Plinq::Application.routes.draw do
   resources :authentications
   resources :leaderboard, :only => [:index]
 
-  resources :users, :only => [:show]
+  resources :users, :only => [:show, :edit, :update]
 
   # for omniauth authentications with other providers
   match '/auth/:provider/callback' => 'authentications#create'

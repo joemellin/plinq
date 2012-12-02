@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby "1.9.3"
+#ruby "1.9.3"
 gem 'rails', '3.2.9'
 
 # Bundle edge Rails instead:
@@ -13,8 +13,12 @@ gem 'cancan'
 gem "omniauth", ">= 1.0"
 gem "omniauth-twitter"
 gem "omniauth-facebook"
+<<<<<<< HEAD
 gem 'koala'
 gem 'eco'
+=======
+
+>>>>>>> 9e52583d384ef7f625ccc8318bd79c1626068cb9
 
 # Gems used only for assets and not required
 # in production environments by default.
