@@ -12,7 +12,6 @@
   .logo_wrapper
     .logo
   .sharewell
-    .left.playButton
-    .left.shareButton{:style => 'padding-left:2px;'}
+    .playButton
+    .shareButton{:style => 'padding-left:2px;'}
     .clear
-  .clear

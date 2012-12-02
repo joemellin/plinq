@@ -3,47 +3,12 @@
   padding-left:130px;
   font-size: 2.0
 }
-
-.sharewell {
-  background: image-url('piano_bar_empty_box.png');
-  width: 202px;
-  height: 42px;
-}
-
 .navbar-inverse .navbar-inner {
   background: image-url('menugrad.jpg') center top repeat-x;
 }
 
 .center {
   text-align: center;
-}
-
-.shareButton {
-  background:image-url('fb_share_button_2.png');
-  width: 157px;
-  height: 39px;
-}
-
-.shareButton:hover {
-  background:image-url('fb_share_button_hover.png');
-}
-
-.shareButton:active {
-  background:image-url('fb_share_button_downstate.png');
-}
-
-.playButton {
-  background: image-url('play_button_metal.png');
-  width: 40px;
-  height: 39px;
-}
-
-.playButton:hover {
-  background:image-url('play_button_hover.png');
-}
-
-.playButton:active {
-  background:image-url('play_button_metal_downstate.png');
 }
 
 
