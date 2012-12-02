@@ -164,7 +164,6 @@ DEPENDENCIES
   devise
   haml-rails
   jquery-rails
-  koala
   mongoid
   omniauth (>= 1.0)
   omniauth-facebook
