@@ -11,7 +11,7 @@
           -#%li= link_to 'Leaderboard', leaderboard_index_path
           - if @songs.present?
             %li= select_tag 'song_dropdown', options_for_select([['Change Song...', '']] + @songs.map{|s| [s.title, url_for(s) + '?dsm=1']}), :id => 'song_selector'
-          %li{:style => 'margin-right: -15px'}= link_to 'Blog', 'http://playplinq.tumblr.com'
+          %li{:style => 'margin-right: -15px'}= link_to 'Blog', 'http://checkthis.com/plinq', :target => '_blank'
           - if user_signed_in?
             %li{:style => 'margin-right: -15px'}= link_to 'Log Out', '/logout'
             - if 1 == 2
