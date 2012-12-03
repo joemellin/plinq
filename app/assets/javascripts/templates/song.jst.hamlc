@@ -10,16 +10,15 @@
 .runnerboard
   .logo_wrapper
     .logo
-  / - if @song.pctCompletePlayingSong() < 100
-  /   .sharewell
-  /     .progress{:style => 'width: 200px'}
-  /       .bar.bar-success{:style => "width: #{@song.pctCompletePlayingSong()}%"}
-  / - else
-  /   .sharewell
-  /     .playButton.playRecordingButton
-  /     .shareButton{:style => 'padding-left:2px;', :onclick => "$('.share_modal').modal(); return false"}
-  /     .clear
-
+  - if @song.pctCompletePlayingSong() < 100
+    .sharewell
+      .progress{:style => 'width: 200px'}
+        .bar.bar-success{:style => "width: #{@song.pctCompletePlayingSong()}%"}
+  - else
+    .sharewell
+      .playButton.playRecordingButton
+      .shareButton{:style => 'padding-left:2px;', :onclick => "$('.share_modal').modal(); return false"}
+      .clear
 .play_modal.modal.hide
   .modal-header
     %button.close{:type => 'button', 'data-dismiss' => 'modal'} x
@@ -40,10 +39,11 @@
 .share_modal.modal.hide
   .modal-header
     %button.close{:type => 'button', 'data-dismiss' => 'modal'} x
-  .modal-body
+  .modal-body{:align => 'center'}
     %form{:action => "#{@song.url()}/share", :method => 'post', :id => 'share_song_form'}
-      What would you like to tell your friends?
+      %div{:style => 'margin-bottom: 20px'} What would you like to tell your friends?
       %input{:type => 'hidden', :value => '', :name => 'id', :id => 'song_id'}
       %textarea{:class => 'span4', :name => 'message'}= @song.defaultShareMessage()
-      .shareButton.shareButtonFinal
+      .shareButton.shareButtonFinal{:align => 'center', :style => 'margin-top: 20px'}
+      %div{:style => 'margin-top: 30px; font-size: .7em; color: #999'} This will share a link to the song you played on your timeline
    

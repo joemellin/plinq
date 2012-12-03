@@ -1,5 +1,5 @@
 Plinq::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => 'registrations'}
 
   resources :songs do
     member do
@@ -19,6 +19,8 @@ Plinq::Application.routes.draw do
   match '/auth/failure' => 'authentications#failure'
 
   get "/music" => "pages#music", :as => "music"
+
+  match '/capture_and_login' => 'application#capture_and_login', :as => :capture_and_login
 
    # Easy routes for auth/account stuff
   as :user do

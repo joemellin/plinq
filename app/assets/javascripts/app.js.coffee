@@ -17,3 +17,7 @@ window.P =
     P.show_play_modal = data.show_play_modal
     Backbone.history.start()
     #P.router.navigate('/')
+
+$ ->
+  $('#song_selector').change (e) ->
+    window.location = $(this).val()

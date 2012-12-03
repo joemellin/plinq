@@ -34,7 +34,8 @@ class Ability
 
     can [:read, :create], Song
     can :manage, Song, :user => user
-    can [:listen, :played], Song
+    can [:listened, :played], Song
+    can :share, Song if !user.new_record?
 
     can :manage, User, :id => user.id
     can :read, User

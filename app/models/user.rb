@@ -37,7 +37,7 @@ class User
   field :location, :type => String
 
   has_many :songs
-  has_many :authentications
+  has_many :authentications, :dependent => :destroy
 
   ## Confirmable
   # field :confirmation_token,   :type => String
@@ -81,9 +81,9 @@ class User
     prms
   end
 
-  def apply_omniauth(omniauth)
+  def apply_omniauth(omniauth, dont_save = false)
     auth = Authentication.new(User.auth_params_from_omniauth(omniauth))
-    authentications << auth
+    self.authentications << auth
     begin
       # TWITTER
       if omniauth['provider'] == 'twitter'
@@ -99,12 +99,16 @@ class User
           self.email = omniauth['extra']['user_hash']['email'] if omniauth['extra'] && omniauth['extra']['user_hash'] && !omniauth['extra']['user_hash']['email'].blank?
           self.email = omniauth['info']['email'] unless omniauth['info']['email'].blank?
         end
-        #self.remote_pic_url = omniauth['info']['image']
+        self.remote_pic_url = omniauth['info']['image']
         self.email = "#{omniauth['info']['nickname']}@users.facebook.com" if self.email.blank?
         self.location = omniauth['info']['location'] if omniauth['info']['location'].present?
       end
     rescue
       logger.warn "ERROR applying omniauth with data: #{omniauth}"
+    end
+    unless dont_save
+      self.save
+      self.authentications.each{|a| a.save if a.new_record? }
     end
   end
 

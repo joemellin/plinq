@@ -20,7 +20,13 @@ class AuthenticationsController < ApplicationController
       else
         flash[:alert] = "Sorry but you could't be authenticated. Please try again:"
       end
-      redirect_to current_user
+      if session[:redirect_to]
+        tmp = session[:redirect_to]
+        session[:redirect_to] = nil
+        redirect_to tmp
+      else
+        redirect_to '/'
+      end
     else
       user = User.new
       user.apply_omniauth(omniauth)
@@ -29,7 +35,6 @@ class AuthenticationsController < ApplicationController
         remember_me(user) # set remember me cookie
         sign_in_and_redirect(:user, user)
       else
-        logger.info user.errors.full_messages.join(', ')
         # Extra details are too much to store
         omniauth.delete('extra')
         session[:omniauth] = omniauth

@@ -17,7 +17,8 @@ class P.Views.Song extends Backbone.View
     @song.recordingSong.play() if @song.recordingSong?
 
   playSong: ->
-    @song.play()
+    @song.play(true)
+    $('.play_modal').modal('hide')
 
   share: ->
     @song.shareRecording()

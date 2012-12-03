@@ -4,16 +4,17 @@ class P.Models.Song extends Backbone.Model
     tracking: true # by default set to tracking
     recording: false
     paused: false
+    playback_count: 0
     speed: 1
     last_note_at: null
-    times_played: 0
+    play_twice: false
     recordingSong: null
     notes: []
 
   urlRoot: '/songs'
 
   defaultShareMessage: ->
-    "Boom! I just learned to play #{@get('title')} on Plinq :)"
+    "Boom! I just learned to play \"#{@get('title')}\" on Plinq :)"
 
    # Sets the right millisecond interval to match tempo
    # whole note is 1, 1/2 note is 2, 1/4 is 4, 1/8 note is 8 etc
@@ -75,7 +76,8 @@ class P.Models.Song extends Backbone.Model
   isRecording: ->
     @get('recording') == true
 
-  play: ->
+  play: (twice = false) ->
+    @set('play_twice', true) if twice
     @stopRecording()
     @set('at', 0)
     @playNextNotes()
@@ -103,7 +105,11 @@ class P.Models.Song extends Backbone.Model
     if type == 'listen'
       @recordListened()
     else if type == 'play'
-      @recordPlayed()
+      if @get('play_twice') == true
+        @set('play_twice', false)
+        @play()
+      else
+        @recordPlayed()
 
   playNextNotes: ->
     key_and_delay = @get('notes')[@get('at')]

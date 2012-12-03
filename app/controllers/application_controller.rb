@@ -6,15 +6,21 @@ class ApplicationController < ActionController::Base
     redirect_to (user_signed_in? ? current_user : '/'), :alert => exception.message
   end
 
+  def capture_and_login
+    session[:password_not_required] = true
+    session[:redirect_to] = params[:redirect_to]
+    redirect_to '/auth/facebook'
+  end
+
   protected
 
-  # def after_sign_in_path_for(resource_or_scope)
-  #   if session[:share_song_id].present?
-  #     redirect_to share_song_path(:id => session[:share_song_id])
-  #   else
-  #     redirect_to root_path
-  #   end
-  # end
+  def after_sign_in_path_for(resource_or_scope)
+    if session[:share_song_id].present?
+      share_song_path(:id => session[:share_song_id])
+    else
+      root_path
+    end
+  end
 
   def load_songs
     @songs = Song.featured.asc(:created_at).limit(20)

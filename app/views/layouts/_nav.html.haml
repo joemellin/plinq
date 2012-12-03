@@ -1,20 +1,25 @@
 .navbar.navbar-inverse{:style => 'padding-bottom:0px'}
   .navbar-inner
-    .span2{:style => 'padding:8px 0px 0px 20px '}= link_to image_tag('topbar_logo.png'), "/"
-    .span8.center
-      %h4 #{@song.play_count} sets performed
-    .span2
+    .span3{:style => 'padding:8px 0px 0px 20px '}= link_to image_tag('topbar_logo.png'), "/"
+    .span6.center
+      - if @song.present?
+        %h4 #{@song.play_count} sets performed
+    .span3
       .right
         .nav
           -#%li= link_to 'Music Library', songs_path
           -#%li= link_to 'Leaderboard', leaderboard_index_path
+          - if @songs.present?
+            %li= select_tag 'song_dropdown', options_for_select(@songs.map{|s| [s.title, url_for(s) + '?dsm=1']}), :id => 'song_selector'
           - if user_signed_in?
-            %li.dropdown
-              %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', :src => '#'}
-                Account
-                %b.caret
-              %ul.dropdown-menu
-                %li= link_to 'View Profile', current_user
-                %li= link_to 'Edit Profile', edit_user_path(current_user)
-                %li= link_to 'Log Out', '/logout'
+            %li= link_to 'Log Out', '/logout'
+            - if 1 == 2
+              %li.dropdown
+                %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', :src => '#'}
+                  Account
+                  %b.caret
+                %ul.dropdown-menu
+                  %li= link_to 'View Profile', current_user
+                  %li= link_to 'Edit Profile', edit_user_path(current_user)
+                  %li= link_to 'Log Out', '/logout'
       .clear

@@ -80,6 +80,9 @@ body {
     .progress {
       height: 39px;
     }
+    .shareButton {
+      float: left;
+    }
   }
 }
 
@@ -88,7 +91,6 @@ body {
   width: 157px;
   height: 39px;
   cursor: pointer;
-  float: left;
 }
 
 .shareButton:hover {

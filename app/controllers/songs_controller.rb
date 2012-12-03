@@ -10,9 +10,9 @@ class SongsController < ApplicationController
 
   def show
     load_songs
-    @show_play_modal = (user_signed_in? && (@song.user.id == current_user.id)) ? true : false
+    @show_play_modal = (params[:dsm].to_s == '1' || (user_signed_in? && (@song.user_id.to_s == current_user.id.to_s))) ? false : true
     respond_to do |format|
-      format.html { render :action => :song}
+      format.html { render :action => :song }
       format.json { render :json => @song }
     end
   end
@@ -21,7 +21,6 @@ class SongsController < ApplicationController
     @song = Song.new(params[:song])
     @song.user = current_user if current_user.present?
     @song.save
-    #@song.share(current_user, params[:message], share_song_url(@song)) if params[:share].present?
     respond_with(@song)
   end
 
@@ -41,6 +40,10 @@ class SongsController < ApplicationController
   def share
     if session[:share_song_id].present?
       params[:message] ||= session[:share_song_message]
+      if @song.user.blank? && @song.id.to_s == session[:share_song_id].to_s
+        @song.user = current_user 
+        @song.save
+      end
       session[:share_song_message] = session[:share_song_id] = nil
     end
     @song.share_on_facebook(current_user, url_for(:action => :show, :id => @song.id, :host => 'www.plinq.co'), params[:message])
