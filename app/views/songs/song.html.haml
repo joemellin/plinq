@@ -30,8 +30,12 @@
 :javascript
   $(function(){
     P.initialize({songs: #{@songs.to_json}, song: #{@song.present? ? @song.to_json : {}}, user: #{user_signed_in? && current_user.present? ? current_user.to_json : '{}'}, show_play_modal: #{@show_play_modal ? true : false} });
-    $('.play_modal').modal();
   });
+- if @show_play_modal
+  :javascript
+    $(function(){
+      $('.play_modal').modal();
+    });
 
 .play_modal.modal.hide
   .modal-header

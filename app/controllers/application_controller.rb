@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def load_songs
+    @show_play_modal = false
     @songs = Song.featured.asc(:created_at).limit(20)
     @play_count = @songs.inject(0){|r, e| r += e.play_count; r}
   end
