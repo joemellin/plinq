@@ -16,7 +16,7 @@ window.P =
     P.user = if data.user? then new P.Models.User(data.user) else null
     P.router = new P.Routers.Router(songs: songs, song: data.song)
     P.show_play_modal = data.show_play_modal
-    Backbone.history.start()
+    #Backbone.history.start()
     #P.router.navigate('/')
 
 $ ->
