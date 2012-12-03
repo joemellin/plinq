@@ -9,7 +9,7 @@ class AuthenticationsController < ApplicationController
   def create
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.where(:provider => omniauth['provider'], :uid => omniauth['uid']).first
-    if authentication
+    if authentication.present?
       authentication.update_attributes(:token => omniauth['credentials']['token'], :secret => omniauth['credentials']['secret']) if omniauth['credentials'] && !omniauth['credentials']['token'].blank?
       remember_me(authentication.user) # set remember me cookie
       sign_in_and_redirect(:user, authentication.user)
