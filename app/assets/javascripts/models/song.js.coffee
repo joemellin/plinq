@@ -52,8 +52,7 @@ class P.Models.Song extends Backbone.Model
     return 0 unless @recordingSong?
     recorded_notes = @recordingSong.get('notes').length
     return 0 if recorded_notes == 0
-    two_bars = @get('notes').length * 2
-    Math.round((recorded_notes / two_bars) * 100)
+    Math.round((recorded_notes / @get('notes').length) * 100)
 
   addNote: (note) ->
     notes = @get('notes')

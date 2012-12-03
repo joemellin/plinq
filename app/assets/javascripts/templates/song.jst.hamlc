@@ -16,7 +16,10 @@
 .runnerboard
   .logo_wrapper
     .logo
-  - if @song.pctCompletePlayingSong() < 100
+  - if @song.pctCompletePlayingSong() == 0 && @song.get('notes').length > 0
+    .sharewell
+      .pre_progress Press "#{@song.get('notes')[0][0]}" to start...
+  - else if @song.pctCompletePlayingSong() < 100
     .sharewell
       .progress{:style => 'width: 200px'}
         .bar.bar-success{:style => "width: #{@song.pctCompletePlayingSong()}%"}
