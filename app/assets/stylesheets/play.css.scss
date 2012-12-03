@@ -36,18 +36,27 @@ body {
       background: #000 image-url('arealhero.jpg') no-repeat center top;
       padding: 0 20px 0 20px;
       overflow-x: hidden;
+      .art {
+        margin-top: 30px;
+        margin-left: 20px;
+        .song_icon img { width: 100px; height: 100px; margin-right: 15px; }
+        .title { margin-top: 0px; margin-bottom: 4px; font-size: 1.4em; font-weight: bold; }
+        .artist { margin-top: 0px; font-size: 1.1em; }
+        height: 110px;
+      }
     }
   }
   .key_group {
     text-align: center;
     min-width: 70px;
-    margin: 145px 25px 200px 25px;
+    margin: 20px 25px 200px 25px;
     font-size: 100px;
     line-height: 100px;
     background-color: #333;
     border: 2px solid #999;
     border-radius: 10px;
     padding: 10px;
+    top: 180px;
   }
   .key_group:first-child{
     border: 5px solid green;

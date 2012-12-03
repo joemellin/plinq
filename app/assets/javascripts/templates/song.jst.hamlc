@@ -1,7 +1,13 @@
 .song
-  / .title= @song.get('title')
-  / - if @song.get('artist')?
-  /   .artist= @song.get('artist')
+  .art
+    - if @song.get('image_url')?
+      .left.song_icon
+        %img{:src => @song.get('image_url')}
+    .left
+      .title= @song.get('title')
+      - if @song.get('artist')?
+        .artist= @song.get('artist')
+    .clear
   #key_groups
     - for note in @song.nextNotes()
       .left.key_group= note.toUpperCase()
