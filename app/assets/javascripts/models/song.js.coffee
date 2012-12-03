@@ -130,6 +130,11 @@ class P.Models.Song extends Backbone.Model
         @playNextNotes()
       ,milliseconds_delay)
 
+  firstNote: ->
+    notes = @get('notes')
+    return '' unless notes?
+    return P.keyboard.get('reverse_keyboard_mappings')[notes[0][0]]
+
   nextNotes: ->
     notes = @get('notes')[@get('at')..]
     tmp = []
