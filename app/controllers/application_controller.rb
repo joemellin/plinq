@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
 
   def load_songs
     @songs = Song.featured.asc(:created_at).limit(20)
+    @play_count = @songs.inject(0){|r, e| r += e.play_count; r}
   end
 
   def login_required

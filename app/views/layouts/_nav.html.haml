@@ -2,8 +2,8 @@
   .navbar-inner
     .span5{:style => 'padding:8px 0px 0px 20px '}= link_to image_tag('topbar_logo.png'), "/"
     .span2.center
-      - if @song.present?
-        %h4 #{@song.play_count} sets performed
+      - if @play_count.present?
+        %h4 #{@play_count} sets performed
     .span5
       .right
         .nav
