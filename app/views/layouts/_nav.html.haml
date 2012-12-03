@@ -1,26 +1,25 @@
 .navbar.navbar-inverse{:style => 'padding-bottom:0px'}
   .navbar-inner
-    .span5{:style => 'padding:8px 0px 0px 20px '}= link_to image_tag('topbar_logo.png'), "/"
-    .span2.center
+    .left{:style => 'padding:8px 0px 0px 20px; width: 30%'}= link_to image_tag('topbar_logo.png'), "/"
+    .left.center{:style => 'width: 30%'}
       - if @play_count.present?
-        %h4 #{@play_count} sets performed
-    .span5
-      .right
-        .nav
-          -#%li= link_to 'Music Library', songs_path
-          -#%li= link_to 'Leaderboard', leaderboard_index_path
-          - if @songs.present?
-            %li= select_tag 'song_dropdown', options_for_select([['Change Song...', '']] + @songs.map{|s| [s.title, url_for(s) + '?dsm=1']}), :id => 'song_selector'
-          %li{:style => 'margin-right: -15px'}= link_to 'Blog', 'http://checkthis.com/plinq', :target => '_blank'
-          - if user_signed_in?
-            %li{:style => 'margin-right: -15px'}= link_to 'Log Out', '/logout'
-            - if 1 == 2
-              %li.dropdown
-                %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', :src => '#'}
-                  Account
-                  %b.caret
-                %ul.dropdown-menu
-                  %li= link_to 'View Profile', current_user
-                  %li= link_to 'Edit Profile', edit_user_path(current_user)
-                  %li= link_to 'Log Out', '/logout'
+        %h4 #{@play_count} sets performed    
+    .right{:style => 'width: 30%; overflow: hidden; max-height: 30px'}
+      .nav
+        -#%li= link_to 'Music Library', songs_path
+        -#%li= link_to 'Leaderboard', leaderboard_index_path
+        - if @songs.present?
+          %li= select_tag 'song_dropdown', options_for_select([['Change Song...', '']] + @songs.map{|s| [s.title, url_for(s) + '?dsm=1']}), :id => 'song_selector'
+        %li{:style => 'margin-right: -15px'}= link_to 'Blog', 'http://checkthis.com/plinq', :target => '_blank'
+        - if user_signed_in?
+          %li{:style => 'margin-right: -15px'}= link_to 'Log Out', '/logout'
+          - if 1 == 2
+            %li.dropdown
+              %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', :src => '#'}
+                Account
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to 'View Profile', current_user
+                %li= link_to 'Edit Profile', edit_user_path(current_user)
+                %li= link_to 'Log Out', '/logout'
       .clear
