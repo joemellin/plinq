@@ -1,18 +1,19 @@
 .navbar.navbar-inverse{:style => 'padding-bottom:0px'}
   .navbar-inner
-    .span4{:style => 'padding:8px 0px 0px 20px '}= link_to image_tag('topbar_logo.png'), "/"
-    .span4.center
+    .span5{:style => 'padding:8px 0px 0px 20px '}= link_to image_tag('topbar_logo.png'), "/"
+    .span2.center
       - if @song.present?
         %h4 #{@song.play_count} sets performed
-    .span4
+    .span5
       .right
         .nav
           -#%li= link_to 'Music Library', songs_path
           -#%li= link_to 'Leaderboard', leaderboard_index_path
           - if @songs.present?
-            %li= select_tag 'song_dropdown', options_for_select(@songs.map{|s| [s.title, url_for(s) + '?dsm=1']}), :id => 'song_selector'
+            %li= select_tag 'song_dropdown', options_for_select([['Change Song...', '']] + @songs.map{|s| [s.title, url_for(s) + '?dsm=1']}), :id => 'song_selector'
+          %li{:style => 'margin-right: -15px'}= link_to 'Blog', 'http://playplinq.tumblr.com'
           - if user_signed_in?
-            %li= link_to 'Log Out', '/logout'
+            %li{:style => 'margin-right: -15px'}= link_to 'Log Out', '/logout'
             - if 1 == 2
               %li.dropdown
                 %a{:class => 'dropdown-toggle', 'data-toggle' => 'dropdown', :src => '#'}

@@ -27,6 +27,6 @@
     %br/
     = text_field_tag 'song[artist]', @song.artist, :placeholder => 'Artist', :id => 'song_artist'
 
-= javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json}, user: #{user_signed_in? && current_user.present? ? current_user.to_json : '{}'}, show_play_modal: #{@show_play_modal ? true : false} }); });"
+= javascript_tag "$(function(){ P.initialize({songs: #{@songs.to_json}, song: #{@song.present? ? @song.to_json : {}}, user: #{user_signed_in? && current_user.present? ? current_user.to_json : '{}'}, show_play_modal: #{@show_play_modal ? true : false} }); });"
 
 = render 'songs/play_modal'

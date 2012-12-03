@@ -6,18 +6,19 @@ class P.Routers.Router extends Backbone.Router
 
   initialize: (options) ->
     @songs = options.songs if options.songs?
+    @song = options.song if options.song?
 
   index: ->
-    song = @songs.first() if @songs?
-    if song?
-      window.original_song_id = song.id
+    @song = @songs.first() if @songs? && !@song?
+    if @song?
+      window.original_song_id = @song.id
     else
-      song = new P.Models.Song()
+      @song = new P.Models.Song()
 
-    P.keyboard = new P.Models.Keyboard(div_name: '#keyboard', song: song)
+    P.keyboard = new P.Models.Keyboard(div_name: '#keyboard', song: @song)
     P.keyboardView = new P.Views.Keyboard(el: $('#keyboard_wrapper'), keyboard: P.keyboard)
     P.keyboard.setup()
-    P.songView = new P.Views.Song(el: $('#song_wrapper'), song: song)
+    P.songView = new P.Views.Song(el: $('#song_wrapper'), song: @song)
 
     $('.play_modal').modal() if P.show_play_modal == true
     #view = new P.Views.Keyboard()
