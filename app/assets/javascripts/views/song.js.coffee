@@ -11,18 +11,18 @@ class P.Views.Song extends Backbone.View
   events: ->
     "click .shareButtonFinal": "share"
     "click .playRecordingButton": "playRecording"
-    "click .playSongButton": "playSong"
 
   playRecording: ->
     @song.recordingSong.play() if @song.recordingSong?
 
   playSong: ->
     @song.play(true)
-    $('.play_modal').modal('hide')
 
   share: ->
     @song.shareRecording()
 
   render: ->
     @.$el.html(@template(song: @song, user: P.user))
+    $('.playSongButton').click =>
+      @song.play(true)
     @
